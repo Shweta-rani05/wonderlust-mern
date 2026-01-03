@@ -1,0 +1,38 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color:  white; /* dark background */
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.home-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.welcome-box {
+  background-color: #ffffff;
+  padding: 40px 50px;
+  width: 70%;
+  max-width: 700px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.welcome-box h1 {
+  margin-bottom: 20px;
+  color: #de1f12;
+
+}
+
+.welcome-box p {
+  font-size: 16px;
+  color: #374151;
+  line-height: 1.6;
+}
+
+
+

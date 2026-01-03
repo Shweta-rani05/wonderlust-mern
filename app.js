@@ -29,10 +29,15 @@ app.engine("ejs" , ejsMate);
 //to connect public folder (style.css)
 app.use(express.static(path.join(__dirname,"/public")));
 
-//root route
-app.get("/" ,(req,res) => {
-    res.send("Hi ,I am root");
+// //root route
+// app.get("/" ,(req,res) => {
+//     res.send("Hi ,I am root");
+// });
+
+app.get("/", (req, res) => {
+  res.render("home.ejs");
 });
+
 
 
 //Index route 
