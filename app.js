@@ -7,6 +7,7 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
+const {listingSchema} = require("./schema.js");
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/wonderlust";
 
@@ -51,14 +52,22 @@ app.get("/listings/new" ,(req,res)=>{
    res.render("listings/new.ejs");
 });
 
+const validateListing =(req,res,next)=>{
+     let {error} = listingSchema.validate(req,body);
+     if(error){
+        let errMsg = error.details.map((el)=> el.message).join(",");//for additional details print 
+        throw new ExpressError(400,error);
+    }else{
+        next();
+    }
+};
+
 //Create route 
 app.post(
     "/listings",
+    validateListing,
     wrapAsync(async(req,res,next)=>{
-        if(!req.body.listing){
-            throw new ExpressError(404,"Sent valid data for listings");
-        }
-         const newListing = new Listing(req.body.listing) ;
+        const newListing = new Listing(req.body.listing) ;
          await newListing.save();
         res.redirect("/listings"); 
     })
@@ -72,11 +81,15 @@ app.get("/listings/:id/edit" ,wrapAsync(async (req,res)=>{
 }));
 
 //update Route 
-app.put("/listings/:id", wrapAsync(async(req,res)=>{
-    const {id}=req.params;
-    await Listing.findByIdAndUpdate(id,{...req.body.listing});
-    res.redirect(`/listings/${id}`);
-}));
+app.put(
+    "/listings/:id",
+    validateListing, 
+    wrapAsync(async(req,res)=>{
+       let {id}=req.params;
+       await Listing.findByIdAndUpdate(id,{...req.body.listing});
+       res.redirect(`/listings/${id}`);
+    })
+);
 
 //show route 
 app.get("/listings/:id",wrapAsync(async (req,res)=>{
@@ -95,9 +108,7 @@ app.delete("/listings/:id",wrapAsync(async (req,res)=>{
 
 }));
 
-// app.all(/.*/,(req,res,next)=>{
-//     next(new ExpressError(404 ,"PAGE NOT FOUND !"));
-// });
+
 
 app.all(/.*/, (req, res, next) => {
     next(new ExpressError(404, "PAGE NOT FOUND!"));
