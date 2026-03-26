@@ -54,20 +54,20 @@ app.get("/listings/new" ,(req,res)=>{
 });
 
 const validateListing =(req,res,next)=>{
-     let {error} = listingSchema.validate(req,body);
+     let {error} = listingSchema.validate(req.body);
      if(error){
         let errMsg = error.details.map((el)=> el.message).join(",");//for additional details print 
-        throw new ExpressError(400,error);
+        throw new ExpressError(400,errMsg);
     }else{
         next();
     }
 };
 
 const validateReview =(req,res,next)=>{
-     let {error} = reviewSchema.validate(req,body);
+     let {error} = reviewSchema.validate(req.body);
      if(error){
         let errMsg = error.details.map((el)=> el.message).join(",");//for additional details print 
-        throw new ExpressError(400,error);
+        throw new ExpressError(400,errMsg);
     }else{
         next();
     }
@@ -105,7 +105,7 @@ app.put(
 //show route 
 app.get("/listings/:id",wrapAsync(async (req,res)=>{
     let {id} = req.params;
-    const listing = await Listing.findById(id).populate("reviews");
+    const listing = await Listing.findById(id).populate("reviews");//for all information of review - populate call 
     res.render("./listings/show.ejs",{listing});
 }));
 
@@ -121,7 +121,8 @@ app.delete("/listings/:id",wrapAsync(async (req,res)=>{
 
 //review route 
   //post route of reviews 
-app.post("/listings/:id/reviews",validateReview, wrapAsync( async(req,res)=>{
+app.post("/listings/:id/reviews",validateReview,//for middleware 
+    wrapAsync( async(req,res)=>{//for error handling 
      let listing = await Listing.findById(req.params.id);
      let newReview =new Review(req.body.review);
 
@@ -134,6 +135,21 @@ app.post("/listings/:id/reviews",validateReview, wrapAsync( async(req,res)=>{
 
 }));
 
+//delete review route
+app.delete("/listings/:id/reviews/:reviewId", wrapAsync(async (req, res) => {
+    let { id, reviewId } = req.params;
+
+    // Remove review reference from listing
+    await Listing.findByIdAndUpdate(id, {
+        $pull: { reviews: reviewId }
+    });
+
+    // Delete review from DB
+    await Review.findByIdAndDelete(reviewId);
+
+    // Redirect back
+    res.redirect(`/listings/${id}`);
+}));
 
 
 app.all(/.*/, (req, res, next) => {
