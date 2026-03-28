@@ -47,3 +47,55 @@ Backend	                                             Node.js, Express.js
 Database                                             MongoDB (Mongoose ODM)
 Authentication                                     	 JSON Web Tokens (JWT), bcrypt
 API Testing & Documentation                        	 Postman
+
+Wonderlust/
+│
+├── models/                     # Database schemas (Mongoose)
+│   ├── listing.js              # Hotel/Listing schema
+│   ├── review.js               # Review schema
+│   └── user.js                 # User schema
+│
+├── routes/                     # Express routes (API & views handling)
+│   ├── listing.js              # Listing-related routes
+│   ├── reviews.js              # Review-related routes
+│   ├── user.js                 # User authentication routes
+│   └── posts.js                # Additional routes (if used)
+│
+├── views/                      # EJS Templates (Frontend rendering)
+│   ├── includes/               # Reusable components
+│   │   ├── navbar.ejs
+│   │   ├── footer.ejs
+│   │   └── flash.ejs
+│   │
+│   ├── layouts/
+│   │   └── boilerplate.ejs     # Main layout template
+│   │
+│   ├── listings/               # Listing pages
+│   │   ├── index.ejs           # Show all listings
+│   │   ├── show.ejs            # Single listing details
+│   │   ├── new.ejs             # Create new listing
+│   │   └── edit.ejs            # Edit listing
+│   │
+│   ├── home.ejs                # Homepage
+│   ├── error.ejs               # Error page
+│   └── page.ejs                # Additional page
+│
+├── init/                       # Initial data setup
+│   ├── data.js                 # Seed data
+│   └── index.js                # Database initialization script
+│
+├── utils/                      # Utility functions
+│   ├── ExpressError.js         # Custom error class
+│   └── wrapAsync.js            # Async error handler
+│
+├── public/                     # Static assets (CSS, JS, images)
+│
+├── node_modules/               # Dependencies
+│
+├── app.js                      # Main Express app configuration
+├── server.js                   # Server entry point
+├── schema.js                   # Validation schemas (Joi or similar)
+├── package.json                # Project metadata & dependencies
+├── package-lock.json
+├── .gitignore
+└── README.md
