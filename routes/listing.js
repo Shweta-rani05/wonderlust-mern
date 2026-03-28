@@ -9,8 +9,14 @@ const Listing = require("../models/listing.js");
 const validateListing =(req,res,next)=>{
      let {error} = listingSchema.validate(req.body);
      if(error){
-        let errMsg = error.details.map((el)=> el.message).join(",");//for additional details print 
-        throw new ExpressError(400,errMsg);
+        console.log("Validation Error:", error.details);//added line 
+        let errMsg = error.details.map((el) => el.message).join(",");
+
+     if (!errMsg) {
+        errMsg = "Invalid listing data"; // ✅ fallback message
+    }
+
+throw new ExpressError(400, errMsg);
     }else{
         next();
     }
@@ -44,9 +50,15 @@ router.post(
     "/",
     validateListing,
     wrapAsync(async(req,res,next)=>{
-        const newListing = new Listing(req.body.listing) ;
+        const newListing = new Listing({
+    ...req.body.listing,
+    image: {
+        url: req.body.listing.image || "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85",
+        filename: "listingimage"
+    }
+    });
          await newListing.save();
-         req.flash("success","New Listing Created!");
+         req.flash("success","New Listing Created");
         res.redirect("/listings"); 
     })
 );
@@ -55,8 +67,10 @@ router.post(
 router.get("/:id/edit" ,wrapAsync(async (req,res)=>{
     let {id} = req.params;
     const listing =  await Listing.findById(id);
+    // console.log("IMAGE DATA:", listing.image); // ✅ ADD HERE
+
     if(!listing){
-        req.flash("error","listing you requested doesnot exist !");
+        req.flash("error","listing you requested doesnot exist");
         res.redirect("/listings");
     }
     res.render("listings/edit.ejs",{listing});
@@ -68,8 +82,14 @@ router.put(
     validateListing, 
     wrapAsync(async(req,res)=>{
        let {id}=req.params;
-       await Listing.findByIdAndUpdate(id,{...req.body.listing});
-       req.flash("success","Listing Updated !");
+       await Listing.findByIdAndUpdate(id, {
+    ...req.body.listing,
+    image: {
+        url: req.body.listing.image,
+        filename: "listingimage"||"https://images.unsplash.com/photo-1505693416388-ac5ce068fe85",filename: "listingimage"
+    }
+    });
+       req.flash("success","Listing Updated");
        res.redirect(`/listings/${id}`);
     })
 );
@@ -82,7 +102,7 @@ router.delete("/:id",wrapAsync(async (req,res)=>{
     let {id} = req.params;
     let deletedListings = await Listing.findByIdAndDelete(id);
     console.log(deletedListings);
-    req.flash("success","listing deleted !");
+    req.flash("success","listing deleted");
     res.redirect("/listings");
 
 }));

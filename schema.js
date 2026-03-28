@@ -2,13 +2,13 @@
 const Joi = require("joi");
 
 module.exports.listingSchema = Joi.object({
-    lisdting:Joi.object({
+    listing:Joi.object({
         title:Joi.string().required(),
         description:Joi.string().required(),
         location:Joi.string().required(),
         country:Joi.string().required(),
-        price:Joi.string().required().min(0),
-        image:Joi.string().allow("",null)
+        price:Joi.number().required().min(0),
+        image:Joi.string().allow("",null).default("https://images.unsplash.com/photo-1505693416388-ac5ce068fe85")
     }).required()
     
 });

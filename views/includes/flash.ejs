@@ -1,16 +1,30 @@
+<!-- 
 <% if(success && success.length){ %>
-    <div class="alert alert-success alert-dismissible fate show col-6 offset-3 " role="alert">
-   <%= success %>
-     <button type="button" clas="btn-class" data-bs-dismiss="alert" aria-label="Close">   
+    <div class="alert alert-success alert-dismissible fade show col-6 offset-3 " role="alert">
+   <%= success[0] %>
+     <button type="button" clas="btn-close" data-bs-dismiss="alert" aria-label="Close">   
      </button>
     </div>
 <% }%>
 
-<!-- for error -->
+
 <% if(error && error.length){ %>
-    <div class="alert alert-danger alert-dismissible fate show col-6 offset-3 " role="alert">
-   <%= error %>
-     <button type="button" clas="btn-class" data-bs-dismiss="alert" aria-label="Close">   
+    <div class="alert alert-danger alert-dismissible fade show col-6 offset-3 " role="alert">
+    <%= error[0] %> 
+     <button type="button" clas="btn-close" data-bs-dismiss="alert" aria-label="Close">   
      </button>
     </div>
-<% }%>
+<% }%> -->
+<% if(success && success.length > 0 && success[0] !== ""){ %>
+    <div class="alert alert-success alert-dismissible fade show col-6 offset-3" role="alert">
+        <%= success[0] %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+<% } %>
+
+<% if(error && error.length > 0 && error[0] !== ""){ %>
+    <div class="alert alert-danger alert-dismissible fade show col-6 offset-3" role="alert">
+        <%= error[0] %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+<% } %>
