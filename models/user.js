@@ -11,7 +11,7 @@ const userSchema = new Schema({
         required : true
     }
 
-});
+}); //pbkdf2 hashing algorithm implemented in the project 
 
 userSchema.plugin(plugin);//username, hashing,salting implement automatically
 module.exports = mongoose.model("User",userSchema);

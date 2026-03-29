@@ -13,8 +13,10 @@ const userRoutes = require("./classroom/routes/user.js");
 app.use("/users", userRoutes);
 const User = require("./models/user.js");
 
-const listings = require("./routes/listing.js");
-const reviews = require("./routes/reviews.js");
+const listingRouter= require("./routes/listing.js");
+const reviewRouter = require("./routes/reviews.js");
+const userRouter = require("./routes/user.js");
+
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/wonderlust";
 
@@ -72,8 +74,9 @@ app.get("/", (req, res) => {
     res.render("home.ejs");
 });
 
-app.use("/listings", listings);
-app.use("/listings/:id/reviews", reviews);
+app.use("/listings", listingRouter);
+app.use("/listings/:id/reviews", reviewRouter)
+app.use("/", userRouter);
 
 app.all(/.*/, (req, res, next) => {
     next(new ExpressError(404, "PAGE NOT FOUND!"));
@@ -92,16 +95,6 @@ app.use((err, req, res, next) => {
 
     res.status(statusCode).render("error.ejs", { message });
 });
-
-app.get("/demouser", async (req, res) => {
-    let fakeUser = new User({
-        email: "student@gmail.com",
-        username: "delta-student",
-    });
-    let registeredUser = await User.register(fakeUser, "helloworld");//automatically check for unique user
-    res.send(registeredUser);
-});
-
 
 // app.listen 
 app.listen(8080, () => {
