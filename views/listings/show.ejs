@@ -9,28 +9,30 @@
 
             <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="listingimage" />
             <div class="card-body">
-                <p class="card-text">
+                <p class="card-text">Owned by:
+                    <i><%= listing.owner.username %></i></p>
                     <br />
-                    <%=listing.description %>
+                   <p> <%=listing.description %></p>
                     <br />
-                     &#8377;<%=listing.price.toLocaleString("en-IN") %>
+                     <p><%=listing.price.toLocaleString("en-IN") %></p>&#8377;
                     <br />
-                    <%=listing.location %>
+                    <p><%=listing.location %></p>
                     <br />
-                    <%=listing.country %>
-
-                </p>
+                    <p><%=listing.country %></p>
             </div>
         </div>
     </div>
     <br />
-    <div class="btns">
+    
+        <div class="btns">
         <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark col-1 offset-3 edit-btn">Edit</a>
         <br />
         <form method="POST" action="/listings/<%=listing._id%>?_method=DELETE">
             <button class="btn btn-dark  offset-6">Delete</button>
         </form>
     </div>
+    
+    
     <br>
 
     <div class="mb-3 mt-3 ">
