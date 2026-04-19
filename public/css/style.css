@@ -123,3 +123,9 @@ body {
   background-color: #161515 !important;
   border:none !important;
  }
+
+ /* Map */
+ #map {
+    height:400px;
+    width: 80vh;
+ }
