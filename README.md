@@ -25,6 +25,8 @@ Wonderlust is a production-oriented web application that enables users to explor
 * **Cloud Storage:** Cloudinary
 * **Maps & Location:** Mapbox API
 <br/>
+## 🏷️ Tech Stack
+
 ![Node.js](https://img.shields.io/badge/Node.js-18+-green?logo=node.js)
 ![Express](https://img.shields.io/badge/Express.js-5.x-black?logo=express)
 ![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-brightgreen?logo=mongodb)
@@ -34,7 +36,6 @@ Wonderlust is a production-oriented web application that enables users to explor
 ![Mapbox](https://img.shields.io/badge/Maps-Mapbox-black?logo=mapbox)
 ![License](https://img.shields.io/badge/License-ISC-lightgrey)
 ![Status](https://img.shields.io/badge/Status-Live-success)
----
 
 ## ✨ Key Features
 
