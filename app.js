@@ -4,6 +4,8 @@ if(process.env.NODE_ENV !="production"){
 
 const express = require("express");
 const app = express();
+// ⭐ ADD HERE
+app.set("trust proxy", 1);
 const mongoose = require("mongoose");
 const path = require("path");
 const methodOverride = require("method-override");
@@ -56,7 +58,7 @@ const store = MongoStore.create({
         secret: process.env.SECRET || "fallbacksecret",       
     },
     touchAfter:24*3600,
-    ttl: 7 * 24 * 60 * 60,
+    ttl:  24 * 3600,
 });
 
 store.on("error",(err)=>{
@@ -72,6 +74,7 @@ const sessionOptions = {
         expires: Date.now() + 7 * 24 * 60 * 60 * 1000,//present date to 7 days 
         maxAge: 7 * 24 * 60 * 60 * 1000,
         httpOnly: true,//for cross-scripting attacks in browser (security)
+        secure: process.env.NODE_ENV === "production", // ⭐ IMPORTANT
     },
 };
 
