@@ -22,7 +22,7 @@ module.exports.showListing = async (req, res) => { //show
     }).populate("owner");//for all information of review - populate call 
     if (!listing) {
         req.flash("error", "listing you requested doesnot exist !");
-        res.redirect("/listings");
+        return res.redirect("/listings");
     }
     console.log(listing);
     res.render("./listings/show.ejs", { listing });
@@ -55,7 +55,7 @@ module.exports.renderEditForm = async (req, res) => { //edit
     const listing = await Listing.findById(id);
     if (!listing) {
         req.flash("error", "listing you requested doesnot exist");
-        res.redirect("/listings");
+        return res.redirect("/listings");
     }
     let originalImageUrl = listing.image.url;
     originalImageUrl = originalImageUrl.replace(
@@ -90,6 +90,4 @@ module.exports.destroyListing = async (req, res) => { //delete or destroy
     res.redirect("/listings");
 
 };
-
-
 

@@ -2,9 +2,6 @@ if(process.env.NODE_ENV !="production"){
     require('dotenv').config();
 };
 
-//require("dotenv").config();
-//console.log(process.env.SECRET);
-
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -13,7 +10,7 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
 const session = require("express-session");
-const MongoStore = require("connect-mongo");
+const MongoStore = require("connect-mongo").default;
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -24,6 +21,7 @@ const User = require("./models/user.js");
 const listingRouter= require("./routes/listing.js");
 const reviewRouter = require("./routes/reviews.js");
 const userRouter = require("./routes/user.js");
+const searchRouter = require("./routes/search.js"); //search
 
 const dbUrl = process.env.ATLASDB_URL;
 
@@ -55,10 +53,10 @@ app.use(express.static(path.join(__dirname, "/public")));
 const store = MongoStore.create({
     mongoUrl: dbUrl,
     crypto:{
-        secret: process.env.SECRET,
-         
+        secret: process.env.SECRET || "fallbacksecret",       
     },
     touchAfter:24*3600,
+    ttl: 7 * 24 * 60 * 60,
 });
 
 store.on("error",(err)=>{
@@ -67,9 +65,9 @@ store.on("error",(err)=>{
 
 const sessionOptions = {
     store,
-    secret:  process.env.SECRET,
+    secret:  process.env.SECRET || "fallbackecret",
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
         expires: Date.now() + 7 * 24 * 60 * 60 * 1000,//present date to 7 days 
         maxAge: 7 * 24 * 60 * 60 * 1000,
@@ -84,20 +82,19 @@ app.use(flash());
 
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
 
+passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser()); // store information related to user
 passport.deserializeUser(User.deserializeUser());//remove session related infortaion of the user.
 
 
 app.use((req, res, next) => {
-    res.locals.success = req.flash("success");
-    res.locals.error = req.flash("error");
-    res.locals.currUser = req.user;
-
+    res.locals.success = req.flash("success") || [];
+    res.locals.error = req.flash("error") || [];
+    res.locals.currUser = req.user ||null ;
+    res.locals.mapToken = process.env.MAP_TOKEN;
     next();
-})
-
+});
 
 
 app.get("/", (req, res) => {
@@ -108,20 +105,27 @@ app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter)
 app.use("/", userRouter);
 
+app.use("/search", searchRouter);//search route 
+
 app.all(/.*/, (req, res, next) => {
     next(new ExpressError(404, "PAGE NOT FOUND!"));
 });
 
 //middleware
 app.use((err, req, res, next) => {
-    console.log("ERROR MESSAGE:", err.message);
-    let { statusCode = 500, message } = err;
+    console.log("ERROR:", err);
+
+    const { statusCode = 500 } = err;
+    let { message } = err;
 
     if (!message || message.trim() === "") {
-        message = "Something went wrong"; // ✅ FORCE fallback
+        message = "Something went wrong";
     }
 
-    console.log("ERROR MESSAGE:", message);
+    // ✅ Prevent headers error
+    if (res.headersSent) {
+        return next(err);
+    }
 
     res.status(statusCode).render("error.ejs", { message });
 });
