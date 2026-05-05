@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🌍 Wonderlust – MERN Hotel Booking Platform
 
 A full-stack **MERN-based hotel booking platform** engineered to demonstrate scalable backend architecture, secure authentication, and real-world application workflows.
@@ -23,6 +24,7 @@ Wonderlust is a production-oriented web application that enables users to explor
 * **Validation:** Joi
 * **Cloud Storage:** Cloudinary
 * **Maps & Location:** Mapbox API
+<br/>
 ![Node.js](https://img.shields.io/badge/Node.js-18+-green?logo=node.js)
 ![Express](https://img.shields.io/badge/Express.js-5.x-black?logo=express)
 ![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-brightgreen?logo=mongodb)
@@ -88,4 +90,5 @@ This project was built as part of hands-on full-stack development practice, focu
 ---
 
 ⭐ If you like this project, feel free to star the repository!
+
 
