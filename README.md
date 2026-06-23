@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # 🌍 Wonderlust – MERN Hotel Booking Platform
 
 A full-stack **MERN-based hotel booking platform** engineered to demonstrate scalable backend architecture, secure authentication, and real-world application workflows.
