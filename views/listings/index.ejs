@@ -13,15 +13,20 @@
                 margin-left: 2rem;
                 margin-top: 2rem;
                 opacity: 0.7;
+                padding-bottom: 0.4rem;
+                border-bottom: 2px solid transparent;
+                transition: all 0.2s ease;
             }
 
-            .filter:hover {
+            .filter:hover, .filter.active {
                 opacity: 1;
                 cursor: pointer;
+                border-bottom: 2px solid #222222;
             }
 
             .filter p {
                 font-size: 0.8rem;
+                margin: 0;
             }
 
             .tax-info{
@@ -39,52 +44,52 @@
         </style>
 
         <div id="filters">
-            <div class="filter">
+            <div class="filter active" data-category="Trending">
                 <div><i class="fa-solid fa-fire"></i></div>
                 <p>Trending</p>
             </div>
-            <div class="filter">
+            <div class="filter" data-category="Rooms">
                 <div><i class="fa-solid fa-bed"></i></div>
                 <p>Rooms</p>
             </div>
-            <div class="filter">
+            <div class="filter" data-category="Iconic Cities">
                 <div><i class="fa-solid fa-mountain-city"></i></div>
                 <p>Iconic Cities</p>
             </div>
-            <div class="filter">
+            <div class="filter" data-category="Mountains">
                 <div><i class="fa-solid fa-mountain"></i></div>
                 <p>Mountains</p>
             </div>
-            <div class="filter">
+            <div class="filter" data-category="Castles">
                 <div><i class="fa-brands fa-fort-awesome"></i></div>
                 <p>Castles</p>
             </div>
-            <div class="filter">
+            <div class="filter" data-category="Amazing pools">
                 <div><i class="fa-solid fa-person-swimming"></i></div>
                 <p>Amazing pools</p>
             </div>
-            <div class="filter">
+            <div class="filter" data-category="Camping">
                 <div><i class="fa-solid fa-campground"></i></div>
                 <p>Camping</p>
             </div>
-            <div class="filter">
+            <div class="filter" data-category="Farms">
                 <div><i class="fa-solid fa-cow"></i></div>
                 <p>Farms</p>
             </div>
-            <div class="filter">
+            <div class="filter" data-category="Arctic">
                 <div><i class="fa-regular fa-snowflake"></i></div>
                 <p>Arctic</p>
             </div>
-             <div class="filter">
+             <div class="filter" data-category="Domes">
                 <div><i class="fa-solid fa-igloo"></i></div>
                 <p>Domes</p>
             </div>
-             <div class="filter">
+             <div class="filter" data-category="Boats">
                 <div><i class="fa-solid fa-ship"></i></div>
                 <p>Boats</p>
             </div>
 
-            <div class="filter">
+            <div class="filter" data-category="Island">
                 <div><i class="fa-solid fa-earth-oceania"></i></div>
                 <p>Island</p>
             </div>
@@ -97,7 +102,7 @@
         </div>
         <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
             <% for (let listing of allListings) { %>
-                <a href="/listings/<%= listing._id %>" class="listing-link">
+                <a href="/listings/<%= listing._id %>" class="listing-link" data-category="<%= listing.category || '' %>">
                     <div class="card col listing-card">
                         <img src="<%= listing.image.url ||'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85' %>"
                             class="card-img-top" alt="listingsimage" style="height:20rem" />
@@ -117,20 +122,50 @@
                 </a>
                 <% } %>
         </div>
-<body/>
-        <script>
-            let taxSwitch = document.getElementById("flexswitchCheckDefault");
-            taxSwitch.addEventListener("click",()=>{
-                 let taxInfo = document.getElementsByClassName("tax-info");
-                 for (info of taxInfo){
-                    if(info.style.display != "inline"){
-                       info.style.display ="inline"; 
-                    }else{
-                        info.style.display ="none";
-                    }
-                    
-                 }
-            });
-        </script>
+    </body>
 
-        
+    <script>
+        // Tax Toggle Logic
+        let taxSwitch = document.getElementById("flexswitchCheckDefault");
+        taxSwitch.addEventListener("click", () => {
+             let taxInfo = document.getElementsByClassName("tax-info");
+             for (info of taxInfo) {
+                if (info.style.display != "inline") {
+                   info.style.display = "inline"; 
+                } else {
+                    info.style.display = "none";
+                }
+             }
+        });
+
+        // Category Filtering Logic
+        const filters = document.querySelectorAll(".filter");
+        const listingLinks = document.querySelectorAll(".listing-link");
+
+        filters.forEach(filter => {
+            filter.addEventListener("click", () => {
+                // Toggle active class
+                filters.forEach(f => f.classList.remove("active"));
+                filter.classList.add("active");
+
+                const selectedCategory = filter.getAttribute("data-category");
+
+                listingLinks.forEach(link => {
+                    const listingCategory = link.getAttribute("data-category");
+                    
+                    if (selectedCategory === "Trending") {
+                        // Reset filter and show all listings
+                        link.style.display = "";
+                    } else {
+                        // Match selected category (case-sensitive check matching the database enum)
+                        if (listingCategory === selectedCategory) {
+                            link.style.display = "";
+                        } else {
+                            link.style.display = "none";
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</html>

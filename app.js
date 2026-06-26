@@ -1,3 +1,6 @@
+const dns = require("dns");
+dns.setDefaultResultOrder("ipv4first");
+
 if(process.env.NODE_ENV !="production"){
     require('dotenv').config();
 };
@@ -24,6 +27,7 @@ const listingRouter= require("./routes/listing.js");
 const reviewRouter = require("./routes/reviews.js");
 const userRouter = require("./routes/user.js");
 const searchRouter = require("./routes/search.js"); //search
+const aiRouter = require("./routes/ai.js");
 
 const dbUrl = process.env.ATLASDB_URL;
 
@@ -45,6 +49,7 @@ app.set("views", path.join(__dirname, "views"));
 app.engine("ejs", ejsMate);
 
 //middlewares
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 //to connect public folder (style.css)
@@ -109,6 +114,7 @@ app.use("/listings/:id/reviews", reviewRouter)
 app.use("/", userRouter);
 
 app.use("/search", searchRouter);//search route 
+app.use("/", aiRouter);
 
 app.all(/.*/, (req, res, next) => {
     next(new ExpressError(404, "PAGE NOT FOUND!"));
@@ -129,6 +135,11 @@ app.use((err, req, res, next) => {
     if (res.headersSent) {
         return next(err);
     }
+
+    // Provide safe defaults for layout variables if locals middleware was bypassed
+    res.locals.currUser = req.user || null;
+    res.locals.success = req.flash ? req.flash("success") : [];
+    res.locals.error = req.flash ? req.flash("error") : [];
 
     res.status(statusCode).render("error.ejs", { message });
 });

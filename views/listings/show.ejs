@@ -1,8 +1,11 @@
 <% layout("/layouts/boilerplate")%>
 
+<script id="listing-data" type="application/json">
+    <%- JSON.stringify(listing || {}) %>
+</script>
 <script>
     const mapToken = "<%= mapToken %>";
-    const listing = <%- JSON.stringify(listing || {}) %>; // warning showing as an error !!
+    const listing = JSON.parse(document.getElementById("listing-data").textContent);
 </script>
     
     <div class="row mt-3 ">
@@ -34,6 +37,11 @@
                 <p>
                     <%=listing.country %>
                 </p>
+                <div class="d-grid mt-3">
+                    <button class="btn ai-planner-btn" id="aiPlannerBtn" data-bs-toggle="modal" data-bs-target="#aiPlannerModal">
+                        <i class="fa-solid fa-wand-magic-sparkles me-2"></i>AI Travel Guide
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -123,3 +131,234 @@
             </div>
             
  <script src="/js/map.js"></script>
+
+<!-- AI Travel Guide Modal -->
+<div class="modal fade" id="aiPlannerModal" tabindex="-1" aria-labelledby="aiPlannerModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content shadow-lg border-0">
+      <div class="modal-header ai-modal-header border-0">
+        <h5 class="modal-title" id="aiPlannerModalLabel">
+          <i class="fa-solid fa-wand-magic-sparkles me-2"></i>AI Travel Guide
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-4">
+        <!-- Form View -->
+        <form id="aiPlannerForm" class="ai-form-card">
+          <p class="text-muted mb-4">Let our AI Travel Guide design a customized itinerary for you at this destination.</p>
+          
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label for="aiDestination" class="form-label fw-semibold">Destination</label>
+              <input type="text" class="form-control" id="aiDestination" value="<%= listing.location %>, <%= listing.country %>" required>
+            </div>
+            <div class="col-md-6">
+              <label for="aiTravelType" class="form-label fw-semibold">Travel Type</label>
+              <select class="form-select" id="aiTravelType" required>
+                <option value="Solo" selected>Solo</option>
+                <option value="Couple">Couple</option>
+                <option value="Family">Family</option>
+                <option value="Friends">Friends</option>
+                <option value="Business">Business</option>
+              </select>
+            </div>
+            
+            <div class="col-md-4">
+              <label for="aiDays" class="form-label fw-semibold">Duration (Days)</label>
+              <input type="number" class="form-control" id="aiDays" min="1" max="30" value="3" required>
+            </div>
+            <div class="col-md-4">
+              <label for="aiBudget" class="form-label fw-semibold">Budget Limit</label>
+              <input type="text" class="form-control" id="aiBudget" placeholder="e.g. ₹50,000 or $600" value="₹30,000" required>
+            </div>
+            <div class="col-md-4">
+              <label for="aiTravelers" class="form-label fw-semibold">No. of Travelers</label>
+              <input type="number" class="form-control" id="aiTravelers" min="1" value="2" required>
+            </div>
+            
+            <div class="col-12">
+              <label for="aiPreferences" class="form-label fw-semibold">Tell AI anything else... (Optional)</label>
+              <textarea class="form-control" id="aiPreferences" rows="3" placeholder="e.g. I love beaches, I like adventure sports, vegetarian restaurant recommendations..."></textarea>
+            </div>
+          </div>
+
+          <div class="d-grid mt-4">
+            <button type="submit" class="btn ai-planner-btn">
+              <i class="fa-solid fa-paper-plane me-2"></i>Generate Itinerary
+            </button>
+          </div>
+        </form>
+
+        <!-- Loading View -->
+        <div class="ai-loader" id="aiLoader">
+          <i class="fa-solid fa-compass ai-pulse-icon"></i>
+          <div class="d-flex justify-content-center gap-1 my-3">
+            <div class="spinner-grow" role="status"></div>
+          </div>
+          <p class="ai-loader-text">Crafting your dream itinerary...</p>
+          <p class="ai-loader-subtitle">Scouting local attractions, curated food spots, and hidden gems.</p>
+        </div>
+
+        <!-- Error View -->
+        <div class="ai-error-container text-center my-3" id="aiError">
+          <i class="fa-solid fa-circle-exclamation text-danger mb-2" style="font-size: 2rem;"></i>
+          <p class="fw-semibold mb-1 text-danger" id="aiErrorMessage">Unable to generate itinerary. Please try again later.</p>
+          <button type="button" class="btn btn-outline-danger btn-sm mt-3" id="aiErrorBackBtn">
+            <i class="fa-solid fa-arrow-left me-2"></i>Modify Form
+          </button>
+        </div>
+
+        <!-- Result View -->
+        <div class="ai-itinerary-container" id="aiItineraryContainer">
+          <div class="ai-itinerary-result" id="aiItineraryResult">
+            <!-- Rendered itinerary will go here -->
+          </div>
+          
+          <div class="ai-action-bar" id="aiActionBar">
+            <button class="btn btn-outline-secondary btn-sm" id="aiBackBtn">
+              <i class="fa-solid fa-arrow-left me-1"></i>Modify
+            </button>
+            <button class="btn btn-outline-primary btn-sm" id="aiCopyBtn">
+              <i class="fa-solid fa-copy me-1"></i>Copy Itinerary
+            </button>
+            <button class="btn btn-outline-success btn-sm" id="aiPdfBtn">
+              <i class="fa-solid fa-file-pdf me-1"></i>Download PDF
+            </button>
+            <button class="btn ai-planner-btn btn-sm text-white" id="aiRegenerateBtn">
+              <i class="fa-solid fa-arrows-rotate me-1"></i>Regenerate
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const aiForm = document.getElementById("aiPlannerForm");
+    const aiLoader = document.getElementById("aiLoader");
+    const aiError = document.getElementById("aiError");
+    const aiErrorMessage = document.getElementById("aiErrorMessage");
+    const aiItineraryContainer = document.getElementById("aiItineraryContainer");
+    const aiItineraryResult = document.getElementById("aiItineraryResult");
+    const aiActionBar = document.getElementById("aiActionBar");
+
+    const aiBackBtn = document.getElementById("aiBackBtn");
+    const aiErrorBackBtn = document.getElementById("aiErrorBackBtn");
+    const aiCopyBtn = document.getElementById("aiCopyBtn");
+    const aiPdfBtn = document.getElementById("aiPdfBtn");
+    const aiRegenerateBtn = document.getElementById("aiRegenerateBtn");
+
+    let lastGeneratedPlan = "";
+
+    function showView(view) {
+      aiForm.style.display = view === "form" ? "block" : "none";
+      aiLoader.style.display = view === "loader" ? "block" : "none";
+      aiError.style.display = view === "error" ? "block" : "none";
+      aiItineraryContainer.style.display = view === "result" ? "block" : "none";
+      aiActionBar.style.display = view === "result" ? "flex" : "none";
+    }
+
+    async function generatePlan() {
+      showView("loader");
+      
+      const requestData = {
+        destination: document.getElementById("aiDestination").value,
+        hotelName: listing.title,
+        hotelPrice: listing.price,
+        hotelLocation: listing.location,
+        hotelDescription: listing.description || "",
+        days: document.getElementById("aiDays").value,
+        budget: document.getElementById("aiBudget").value,
+        travelers: document.getElementById("aiTravelers").value,
+        travelType: document.getElementById("aiTravelType").value,
+        preferences: document.getElementById("aiPreferences").value
+      };
+
+      try {
+        const response = await fetch("/api/ai/trip-planner", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(requestData)
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          lastGeneratedPlan = data.plan;
+          aiItineraryResult.innerHTML = marked.parse(data.plan);
+          showView("result");
+        } else {
+          aiErrorMessage.textContent = data.message || "Unable to generate itinerary. Please try again later.";
+          showView("error");
+        }
+      } catch (err) {
+        console.error("AI Planner fetch error:", err);
+        aiErrorMessage.textContent = "Unable to generate itinerary. Please try again later.";
+        showView("error");
+      }
+    }
+
+    aiForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      generatePlan();
+    });
+
+    aiRegenerateBtn.addEventListener("click", () => {
+      generatePlan();
+    });
+
+    aiBackBtn.addEventListener("click", () => {
+      showView("form");
+    });
+
+    aiErrorBackBtn.addEventListener("click", () => {
+      showView("form");
+    });
+
+    aiCopyBtn.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(lastGeneratedPlan);
+        const originalText = aiCopyBtn.innerHTML;
+        aiCopyBtn.innerHTML = '<i class="fa-solid fa-check me-1"></i>Copied!';
+        aiCopyBtn.classList.remove("btn-outline-primary");
+        aiCopyBtn.classList.add("btn-success");
+        
+        setTimeout(() => {
+          aiCopyBtn.innerHTML = originalText;
+          aiCopyBtn.classList.remove("btn-success");
+          aiCopyBtn.classList.add("btn-outline-primary");
+        }, 2000);
+      } catch (err) {
+        alert("Failed to copy text: " + err);
+      }
+    });
+
+    aiPdfBtn.addEventListener("click", () => {
+      const element = document.createElement("div");
+      element.innerHTML = `
+        <div style="font-family: 'Plus Jakarta Sans', sans-serif; padding: 20px;">
+          <h2 style="color: #1e1b4b; text-align: center; margin-bottom: 20px;">AI Travel Guide Itinerary</h2>
+          <hr/>
+          \${aiItineraryResult.innerHTML}
+        </div>
+      `;
+
+      const dest = document.getElementById("aiDestination").value.replace(/[^a-zA-Z0-9]/g, '_');
+      const opt = {
+        margin:       10,
+        filename:     `Travel_Itinerary_\${dest}.pdf`,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+
+      html2pdf().from(element).set(opt).save();
+    });
+  });
+</script>

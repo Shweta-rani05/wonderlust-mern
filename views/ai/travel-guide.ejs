@@ -1,0 +1,338 @@
+<% layout("/layouts/boilerplate") %>
+
+<style>
+    /* Local Style Overrides to match mockup exactly */
+    .ai-itinerary-result h1, 
+    .ai-itinerary-result h2, 
+    .ai-itinerary-result h3, 
+    .ai-itinerary-result h4 {
+        color: #1e1b4b !important;
+        border: none !important;
+        padding: 0 !important;
+        margin-top: 1.5rem !important;
+        margin-bottom: 0.75rem !important;
+        font-weight: 700 !important;
+    }
+    .ai-itinerary-result h1 {
+        font-size: 1.8rem !important;
+    }
+    .ai-itinerary-result h2, 
+    .ai-itinerary-result h3 {
+        font-size: 1.3rem !important;
+    }
+    .ai-itinerary-result p {
+        color: #374151 !important;
+        line-height: 1.6 !important;
+        margin-bottom: 1.25rem !important;
+        font-size: 0.95rem !important;
+    }
+    .ai-itinerary-result ul, 
+    .ai-itinerary-result ol {
+        padding-left: 1.25rem !important;
+        margin-bottom: 1.25rem !important;
+    }
+    .ai-itinerary-result li {
+        color: #374151 !important;
+        line-height: 1.6 !important;
+        margin-bottom: 0.5rem !important;
+        font-size: 0.95rem !important;
+    }
+    .ai-form-card {
+        background-color: #ffffff !important;
+        border: 1px solid #eaeaea !important;
+        border-radius: 12px !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03) !important;
+    }
+    .ai-output-card {
+        background-color: #ffffff !important;
+        border: 1px solid #eaeaea !important;
+        border-radius: 12px !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03) !important;
+    }
+    .form-control, .form-select {
+        border-color: #d1d5db !important;
+        border-radius: 8px !important;
+        padding: 0.6rem 0.75rem !important;
+        font-size: 0.95rem !important;
+    }
+    .form-control:focus, .form-select:focus {
+        border-color: #ff385c !important;
+        box-shadow: 0 0 0 2px rgba(255, 56, 92, 0.1) !important;
+    }
+</style>
+
+<div class="row mt-4 mb-5">
+    <div class="col-lg-10 offset-lg-1">
+        <!-- Center-aligned Header -->
+        <div class="text-center mb-4 mt-2">
+            <h2 class="fw-bold d-inline-flex align-items-center justify-content-center gap-2 mb-2" style="color: #1e1b4b; font-size: 2.2rem;">
+                <i class="fa-solid fa-wand-magic-sparkles" style="color: #ff385c !important;"></i> AI Travel Guide
+            </h2>
+            <p class="text-secondary" style="font-size: 0.95rem; font-weight: 500;">Plan your perfect trip with personalized recommendations</p>
+        </div>
+        
+        <div class="row g-4">
+            <!-- Planning Form Panel -->
+            <div class="col-md-5">
+                <div class="card ai-form-card p-4 h-100">
+                    <h5 class="fw-bold mb-4 d-flex align-items-center gap-2" style="color: #222222; font-size: 1.15rem;">
+                        <i class="fa-solid fa-sliders" style="color: #ff385c;"></i> Configure Your Trip
+                    </h5>
+                    <form id="aiPlannerForm">
+                        <div class="mb-3">
+                            <label for="aiDestination" class="form-label fw-bold text-dark mb-1" style="font-size: 0.85rem;">Where do you want to go?</label>
+                            <input type="text" class="form-control" id="aiDestination" placeholder="e.g. Goa, India or Paris, France" value="goa" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="aiTravelType" class="form-label fw-bold text-dark mb-1" style="font-size: 0.85rem;">Travel Type</label>
+                            <select class="form-select" id="aiTravelType" required>
+                                <option value="Solo" selected>Solo</option>
+                                <option value="Couple">Couple</option>
+                                <option value="Family">Family</option>
+                                <option value="Friends">Friends</option>
+                                <option value="Business">Business</option>
+                            </select>
+                        </div>
+
+                        <div class="row g-2 mb-3">
+                            <div class="col-6">
+                                <label for="aiDays" class="form-label fw-bold text-dark mb-1" style="font-size: 0.85rem;">Duration (Days)</label>
+                                <input type="number" class="form-control" id="aiDays" min="1" max="30" value="3" required>
+                            </div>
+                            <div class="col-6">
+                                <label for="aiTravelers" class="form-label fw-bold text-dark mb-1" style="font-size: 0.85rem;">Travelers</label>
+                                <input type="number" class="form-control" id="aiTravelers" min="1" value="2" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="aiBudget" class="form-label fw-bold text-dark mb-1" style="font-size: 0.85rem;">Budget Limit</label>
+                            <input type="text" class="form-control" id="aiBudget" placeholder="e.g. ₹30,000 or $500" value="₹30,000" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="aiPreferences" class="form-label fw-bold text-dark mb-1" style="font-size: 0.85rem;">Preferences / Notes (Optional)</label>
+                            <textarea class="form-control" id="aiPreferences" rows="3" placeholder="e.g. beach lover, vegetarian restaurants, adventure sports..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn ai-planner-btn w-100 d-flex align-items-center justify-content-center gap-2" style="background-color: #ff385c !important; border: none; border-radius: 8px; font-weight: 600; padding: 0.65rem;">
+                            <i class="fa-solid fa-magnifying-glass"></i> Generate Itinerary
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Itinerary Display Panel -->
+            <div class="col-md-7">
+                <!-- Welcome View -->
+                <div class="card ai-output-card p-5 text-center h-100 d-none flex-column justify-content-center align-items-center bg-light" id="aiWelcomeView" style="min-height: 400px;">
+                    <i class="fa-solid fa-route text-muted mb-3" style="font-size: 3.5rem; opacity: 0.5;"></i>
+                    <h5 class="fw-bold text-secondary">Your Itinerary Awaits</h5>
+                    <p class="text-muted px-4">Enter your travel details on the left and click Generate to create a beautifully detailed travel plan powered by Gemini AI.</p>
+                </div>
+
+                <!-- Loading View -->
+                <div class="card ai-output-card p-5 text-center h-100 d-none flex-column justify-content-center align-items-center" id="aiLoaderView">
+                    <i class="fa-solid fa-compass ai-pulse-icon"></i>
+                    <div class="d-flex justify-content-center gap-1 my-3">
+                        <div class="spinner-grow" role="status" style="color: #ff385c;"></div>
+                    </div>
+                    <p class="ai-loader-text">Crafting your dream itinerary...</p>
+                    <p class="ai-loader-subtitle">Scouting local attractions, food options, and travel recommendations.</p>
+                </div>
+
+                <!-- Error View -->
+                <div class="card ai-output-card p-5 text-center h-100 d-none flex-column justify-content-center align-items-center border-danger-subtle bg-danger-subtle bg-opacity-10" id="aiErrorView">
+                    <i class="fa-solid fa-circle-exclamation text-danger mb-3" style="font-size: 3rem;"></i>
+                    <h5 class="fw-bold text-danger">Generation Failed</h5>
+                    <p class="text-danger-emphasis mb-3" id="aiErrorMessage">Unable to generate itinerary. Please try again later.</p>
+                    <button class="btn btn-outline-danger btn-sm" id="aiRetryBtn">Modify Inputs</button>
+                </div>
+
+                <!-- Output View -->
+                <div class="card ai-output-card h-100 d-flex flex-column" id="aiOutputView" style="background: #fff;">
+                    <div class="card-header bg-white border-0 pt-4 px-4 d-flex justify-content-between align-items-center">
+                        <h5 class="fw-bold m-0 d-flex align-items-center gap-2" style="color: #222222; font-size: 1.15rem;">
+                            <i class="fa-solid fa-map-location-dot" style="color: #ff385c;"></i> Custom Itinerary
+                        </h5>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-outline-secondary btn-sm px-3 rounded-2 fw-semibold d-flex align-items-center gap-2" id="aiCopyBtn" title="Copy Text" style="border-color: #d1d5db; color: #4b5563; font-size: 0.85rem; padding: 0.4rem 0.75rem;">
+                                <i class="fa-regular fa-copy" style="font-size: 0.85rem;"></i> Copy
+                            </button>
+                            <button class="btn btn-outline-danger btn-sm px-3 rounded-2 fw-semibold d-flex align-items-center gap-2" id="aiPdfBtn" title="Download PDF" style="border-color: #ff385c; color: #ff385c; font-size: 0.85rem; padding: 0.4rem 0.75rem;">
+                                <i class="fa-solid fa-file-pdf" style="font-size: 0.85rem;"></i> PDF
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body px-4 pb-4">
+                        <div class="ai-itinerary-container d-block border-0 p-0 overflow-auto" id="aiItineraryResult" style="max-height: 480px;">
+                            <!-- Result HTML will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Shield Disclaimer -->
+        <div class="text-center mt-4">
+            <small class="text-secondary d-inline-flex align-items-center justify-content-center gap-2" style="font-size: 0.85rem; font-weight: 500;">
+                <i class="fa-solid fa-shield-halved text-secondary" style="font-size: 0.9rem;"></i> AI-generated plans may vary. Please verify details before booking.
+            </small>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("aiPlannerForm");
+        const welcomeView = document.getElementById("aiWelcomeView");
+        const loaderView = document.getElementById("aiLoaderView");
+        const errorView = document.getElementById("aiErrorView");
+        const outputView = document.getElementById("aiOutputView");
+        
+        const itineraryResult = document.getElementById("aiItineraryResult");
+        const errorMessage = document.getElementById("aiErrorMessage");
+        
+        const retryBtn = document.getElementById("aiRetryBtn");
+        const copyBtn = document.getElementById("aiCopyBtn");
+        const pdfBtn = document.getElementById("aiPdfBtn");
+        
+        let lastGeneratedPlan = "";
+
+        // Default populated Goa itinerary matching the mockup
+        const defaultPlan = `Here's a concise and practical travel plan for your 3-day trip to Goa with a budget of ₹30,000 for 2 travelers.
+
+---
+
+# Goa Escape: Beaches, Culture & Flavours
+
+### 1. Summary
+Embark on a vibrant 3-day adventure to Goa, exploring its sun-kissed North Goa beaches, rich cultural heritage, and delicious local cuisine. This plan focuses on a blend of relaxation, sightseeing, and fun, perfectly fitting your ₹30,000 budget for two.
+
+### 2. Day-wise Itinerary
+
+**Day 1: North Goa Beaches & Lively Evenings**
+* **Morning (Arrival & Check-in):** Arrive at Goa Dabolim Airport (GOI) or Madgaon Railway Station. Check in to your hotel and relax.
+* **Afternoon:** Visit Calangute and Baga beaches. Try some local shacks for lunch.
+* **Evening:** Experience the vibrant nightlife at Baga Beach or Tito's Lane.
+
+**Day 2: South Goa Heritage & Culture**
+* **Morning:** Head to Old Goa. Visit the Basilica of Bom Jesus and Se Cathedral.
+* **Afternoon:** Have lunch in Panaji (Fontainhas area) and explore the Latin Quarter.
+* **Evening:** Take a sunset cruise on the Mandovi River.
+
+**Day 3: Scenic Beaches & Departure**
+* **Morning:** Visit Anjuna Beach and the famous Anjuna flea market (if Wednesday).
+* **Afternoon:** Relax at Vagator Beach and check out Chapora Fort.
+* **Evening:** Depart with beautiful memories.`;
+        
+        function showView(view) {
+            welcomeView.classList.toggle("d-none", view !== "welcome");
+            welcomeView.classList.toggle("d-flex", view === "welcome");
+            
+            loaderView.classList.toggle("d-none", view !== "loader");
+            loaderView.classList.toggle("d-flex", view === "loader");
+            
+            errorView.classList.toggle("d-none", view !== "error");
+            errorView.classList.toggle("d-flex", view === "error");
+            
+            outputView.classList.toggle("d-none", view !== "output");
+            outputView.classList.toggle("d-flex", view === "output");
+        }
+
+        // Load the default Goa itinerary on page load to match the mockup state
+        lastGeneratedPlan = defaultPlan;
+        itineraryResult.innerHTML = marked.parse(defaultPlan);
+        showView("output");
+        
+        async function generatePlan() {
+            showView("loader");
+            
+            const requestData = {
+                destination: document.getElementById("aiDestination").value,
+                hotelName: "Not Specified (Standalone Planner)",
+                hotelPrice: 0,
+                hotelLocation: "Not Specified",
+                hotelDescription: "Planning from scratch",
+                days: document.getElementById("aiDays").value,
+                budget: document.getElementById("aiBudget").value,
+                travelers: document.getElementById("aiTravelers").value,
+                travelType: document.getElementById("aiTravelType").value,
+                preferences: document.getElementById("aiPreferences").value
+            };
+            
+            try {
+                const response = await fetch("/api/ai/trip-planner", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(requestData)
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    lastGeneratedPlan = data.plan;
+                    itineraryResult.innerHTML = marked.parse(data.plan);
+                    showView("output");
+                } else {
+                    errorMessage.textContent = data.message || "Unable to generate itinerary. Please try again later.";
+                    showView("error");
+                }
+            } catch (err) {
+                console.error("AI Standalone fetch error:", err);
+                errorMessage.textContent = "Unable to generate itinerary. Please try again later.";
+                showView("error");
+            }
+        }
+        
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            generatePlan();
+        });
+        
+        retryBtn.addEventListener("click", () => {
+            showView("welcome");
+        });
+        
+        copyBtn.addEventListener("click", async () => {
+            try {
+                await navigator.clipboard.writeText(lastGeneratedPlan);
+                const originalHTML = copyBtn.innerHTML;
+                copyBtn.innerHTML = '<i class="fa-solid fa-check me-1 text-success"></i> Copied!';
+                setTimeout(() => {
+                    copyBtn.innerHTML = originalHTML;
+                }, 2000);
+            } catch (err) {
+                alert("Failed to copy itinerary.");
+            }
+        });
+        
+        pdfBtn.addEventListener("click", () => {
+            const element = document.createElement("div");
+            element.innerHTML = `
+                <div style="font-family: 'Plus Jakarta Sans', sans-serif; padding: 20px;">
+                    <h2 style="color: #1e1b4b; text-align: center; margin-bottom: 20px;">AI Travel Itinerary</h2>
+                    <hr/>
+                    ${itineraryResult.innerHTML}
+                </div>
+            `;
+            
+            const dest = document.getElementById("aiDestination").value.replace(/[^a-zA-Z0-9]/g, '_');
+            const opt = {
+                margin:       10,
+                filename:     `Travel_Itinerary_${dest}.pdf`,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2 },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            
+            html2pdf().from(element).set(opt).save();
+        });
+    });
+</script>
+
