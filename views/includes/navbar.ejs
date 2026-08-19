@@ -1,9 +1,10 @@
 <style>
   .navbar {
-     min-height: 5rem;
-     height: auto !important;
-     background-color: white;
+    min-height: 5rem;
+    height: auto !important;
+    background-color: white;
   }
+
   .btn-search {
     background-color: #ff385c !important;
     color: #fff !important;
@@ -11,14 +12,17 @@
     font-weight: 600;
     font-size: 0.9rem;
   }
+
   .btn-search:hover {
     background-color: #e0314f !important;
     color: #fff !important;
   }
+
   .nav-link {
     font-size: 0.95rem;
     color: #222222 !important;
   }
+
   .nav-link:hover {
     color: #ff385c !important;
   }
@@ -28,10 +32,11 @@
   <div class="container-fluid px-md-4">
     <!-- Left Section: Logo & Brand Links -->
     <div class="d-flex align-items-center gap-2">
-      <a class="navbar-brand m-0 d-flex align-items-center justify-content-center" href="/" style="width: 2.2rem; height: 2.2rem; background-color: #ff385c; border-radius: 50%; min-width: 2.2rem;">
+      <a class="navbar-brand m-0 d-flex align-items-center justify-content-center" href="/"
+        style="width: 2.2rem; height: 2.2rem; background-color: #ff385c; border-radius: 50%; min-width: 2.2rem;">
         <i class="fa-regular fa-compass" style="color: white; font-size: 1.25rem;"></i>
       </a>
-      
+
       <!-- toggle for mobile -->
       <button class="navbar-toggler ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
         <span class="navbar-toggler-icon"></span>
@@ -50,25 +55,44 @@
 
       <!-- Center Section: Capsule Search Bar -->
       <div class="navbar-nav mx-auto my-2 my-md-0">
-        <form class="d-flex align-items-center border rounded-pill p-1 bg-white shadow-sm" role="search" action="/search" style="max-width: 450px; width: 320px;">
-          <input class="form-control border-0 bg-transparent px-3 py-1" type="search" 
-                 name="q"
-                 placeholder="Search Destinations" aria-label="Search" style="box-shadow: none; font-size: 0.9rem;" />
+        <form class="d-flex align-items-center border rounded-pill p-1 bg-white shadow-sm" role="search"
+          action="/search" style="max-width: 450px; width: 320px;">
+          <input class="form-control border-0 bg-transparent px-3 py-1" type="search" name="q"
+            placeholder="Search Destinations" aria-label="Search" style="box-shadow: none; font-size: 0.9rem;" />
           <button class="btn btn-search rounded-pill px-3 py-1 d-flex align-items-center gap-2" type="submit">
             <i class="fa-solid fa-magnifying-glass" style="font-size: 0.85rem;"></i>Search
           </button>
         </form>
       </div>
 
+      
       <!-- Right Section: Host and Auth links -->
       <div class="navbar-nav ms-auto align-items-center gap-3 mt-2 mt-md-0">
-        <a class="nav-link fw-semibold" href="/listings/new">Airbnb your Home</a>
-        <% if(!locals.currUser){ %>
-          <a class="nav-link fw-semibold" href="/signup">Sign up</a>
-          <a class="nav-link fw-semibold" href="/login">Log in</a>
-        <% } else { %>
-          <a class="nav-link fw-semibold" href="/logout">Log out</a>
-        <% } %>
+
+        <a class="nav-link fw-semibold" href="/listings/new">
+          Airbnb your Home
+        </a>
+
+        <% if (typeof currUser !== 'undefined' && currUser) { %>
+
+          <!-- User is logged in -->
+          <a class="nav-link fw-semibold" href="/logout">
+            Log out
+          </a>
+
+          <% } else { %>
+
+            <!-- User is not logged in -->
+            <a class="nav-link fw-semibold" href="/signup">
+              Sign up
+            </a>
+
+            <a class="nav-link fw-semibold" href="/login">
+              Log in
+            </a>
+
+            <% } %>
+
       </div>
     </div>
   </div>

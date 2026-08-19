@@ -78,3 +78,8 @@ module.exports.isReviewAuthor = async (req, res, next) => {
 
     next();
 };
+
+module.exports.saveCurrentUser = (req, res, next) => {
+    res.locals.currUser = req.user || undefined;
+    next();
+};

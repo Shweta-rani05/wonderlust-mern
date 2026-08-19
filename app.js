@@ -28,6 +28,7 @@ const reviewRouter = require("./routes/reviews.js");
 const userRouter = require("./routes/user.js");
 const searchRouter = require("./routes/search.js"); //search
 const aiRouter = require("./routes/ai.js");
+const { saveCurrentUser } = require("./middleware.js");
 
 const dbUrl = process.env.ATLASDB_URL;
 
@@ -86,6 +87,12 @@ const sessionOptions = {
 
 
 app.use(session(sessionOptions));//session add with website 
+app.use((req, res, next) => {
+    if (req.session && req.session.cookie && (req.hostname === "localhost" || req.hostname === "127.0.0.1")) {
+        req.session.cookie.secure = false;
+    }
+    next();
+});
 app.use(flash());
 
 app.use(passport.initialize());
@@ -99,10 +106,11 @@ passport.deserializeUser(User.deserializeUser());//remove session related infort
 app.use((req, res, next) => {
     res.locals.success = req.flash("success") || [];
     res.locals.error = req.flash("error") || [];
-    res.locals.currUser = req.user ||null ;
     res.locals.mapToken = process.env.MAP_TOKEN;
     next();
 });
+
+app.use(saveCurrentUser);
 
 
 app.get("/", (req, res) => {
