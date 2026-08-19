@@ -83,3 +83,11 @@ module.exports.saveCurrentUser = (req, res, next) => {
     res.locals.currUser = req.user || undefined;
     next();
 };
+
+module.exports.isLoggedInAjax = (req, res, next) => {
+    if (!req.isAuthenticated()) {
+        req.session.redirectUrl = req.headers.referer || "/listings";
+        return res.status(401).json({ success: false, redirect: "/login", message: "You must be logged in." });
+    }
+    next();
+};

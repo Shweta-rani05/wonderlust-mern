@@ -7,12 +7,35 @@
     const mapToken = "<%= mapToken %>";
     const listing = JSON.parse(document.getElementById("listing-data").textContent);
 </script>
+
+<style>
+    .wishlist-detail-btn {
+        transition: all 0.2s ease;
+    }
+    .wishlist-detail-icon {
+        font-size: 1.1rem;
+        transition: color 0.2s ease;
+    }
+    .wishlist-detail-icon.active {
+        color: #ff385c;
+    }
+</style>
     
     <div class="row mt-3 ">
-        <div class="col-8 offset-2 mb-3">
+        <div class="col-8 offset-2 mb-3 d-flex align-items-center justify-content-between">
             <h3>
                 <%= listing.title %>
             </h3>
+            <% 
+              let isWishlisted = false; 
+              if (typeof currUser !== 'undefined' && currUser && currUser.wishlist) {
+                  isWishlisted = currUser.wishlist.some(id => id.toString() === listing._id.toString());
+              }
+            %>
+            <button class="btn btn-outline-dark wishlist-detail-btn px-3 py-2 d-flex align-items-center gap-2 rounded-pill" data-id="<%= listing._id %>">
+                <i class="<%= isWishlisted ? 'fa-solid fa-heart wishlist-detail-icon active' : 'fa-regular fa-heart wishlist-detail-icon' %>"></i>
+                <span class="fw-semibold"><%= isWishlisted ? 'Saved' : 'Save' %></span>
+            </button>
         </div>
         <div class="card col-6 offset-3 show-card listing-card">
 
@@ -360,5 +383,41 @@
 
       html2pdf().from(element).set(opt).save();
     });
+
+    // Wishlist Toggle Logic for Show Page
+    const wishlistDetailBtn = document.querySelector(".wishlist-detail-btn");
+    if (wishlistDetailBtn) {
+        wishlistDetailBtn.addEventListener("click", async () => {
+            const id = wishlistDetailBtn.getAttribute("data-id");
+            try {
+                const response = await fetch(`/listings/${id}/wishlist`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
+                
+                const data = await response.json();
+                if (response.status === 401 && data.redirect) {
+                    window.location.href = data.redirect;
+                    return;
+                }
+                
+                if (data.success) {
+                    const icon = wishlistDetailBtn.querySelector("i");
+                    const textSpan = wishlistDetailBtn.querySelector("span");
+                    if (data.added) {
+                        icon.className = "fa-solid fa-heart wishlist-detail-icon active";
+                        textSpan.textContent = "Saved";
+                    } else {
+                        icon.className = "fa-regular fa-heart wishlist-detail-icon";
+                        textSpan.textContent = "Save";
+                    }
+                }
+            } catch (err) {
+                console.error("Error toggling wishlist:", err);
+            }
+        });
+    }
   });
 </script>

@@ -76,6 +76,10 @@
         <% if (typeof currUser !== 'undefined' && currUser) { %>
 
           <!-- User is logged in -->
+          <a class="nav-link fw-semibold d-flex align-items-center gap-1" href="/wishlist">
+            <i class="fa-solid fa-heart text-danger" style="font-size: 0.85rem;"></i>Wishlist
+          </a>
+
           <a class="nav-link fw-semibold" href="/logout">
             Log out
           </a>

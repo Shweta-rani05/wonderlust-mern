@@ -1,4 +1,5 @@
 const Listing = require("../models/listing.js");
+const User = require("../models/user.js");
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 const mapToken=process.env.MAP_TOKEN;
 const geocodingClient = mbxGeocoding({ accessToken: mapToken});
@@ -89,5 +90,28 @@ module.exports.destroyListing = async (req, res) => { //delete or destroy
     req.flash("success", "listing deleted");
     res.redirect("/listings");
 
+};
+
+module.exports.toggleWishlist = async (req, res) => {
+    let { id } = req.params;
+    let user = await User.findById(req.user._id);
+    if (!user.wishlist) {
+        user.wishlist = [];
+    }
+    let index = user.wishlist.findIndex(item => item.toString() === id);
+    let added = false;
+    if (index === -1) {
+        user.wishlist.push(id);
+        added = true;
+    } else {
+        user.wishlist.splice(index, 1);
+    }
+    await user.save();
+    res.json({ success: true, added });
+};
+
+module.exports.viewWishlist = async (req, res) => {
+    let user = await User.findById(req.user._id).populate("wishlist");
+    res.render("listings/wishlist.ejs", { wishlistedListings: user.wishlist || [] });
 };
 

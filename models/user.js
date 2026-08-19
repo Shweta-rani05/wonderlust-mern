@@ -9,8 +9,13 @@ const userSchema = new Schema({
     email: {
         type:String,
         required : true
-    }
-
+    },
+    wishlist: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Listing"
+        }
+    ]
 }); //pbkdf2 hashing algorithm implemented in the project 
 
 userSchema.plugin(plugin);//username, hashing,salting implement automatically
