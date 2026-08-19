@@ -1,15 +1,67 @@
 <footer>
-    <div class="f-info">
-        <div class="f-info-socials">
-            <i class="fa-brands fa-facebook"></i>
-            <i class="fa-brands fa-instagram"></i>
-            <i class="fa-brands fa-linkedin"></i>
+    <div class="container">
+        <div class="row g-4">
+            <!-- Brand Column -->
+            <div class="col-lg-3 col-md-6">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <a class="d-flex align-items-center justify-content-center" href="/"
+                        style="width: 2.2rem; height: 2.2rem; background-color: #ff385c; border-radius: 50%; text-decoration: none;">
+                        <i class="fa-regular fa-compass" style="color: white; font-size: 1.25rem;"></i>
+                    </a>
+                    <span class="fw-bold" style="color: #ff385c; font-size: 1.35rem; font-weight: 800; letter-spacing: -0.5px;">Wonderlust</span>
+                </div>
+                <p class="text-secondary" style="font-size: 0.85rem; line-height: 1.6;">
+                    Discover stays. Plan smarter. Travel better with AI-generated day-wise itineraries custom-built for your journey.
+                </p>
+                <div class="footer-socials">
+                    <a href="https://github.com/Shweta-rani05/wonderlust-mern" target="_blank" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+                    <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="https://twitter.com" target="_blank" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                </div>
+            </div>
 
+            <!-- Quick Links -->
+            <div class="col-lg-2 col-md-6 col-6 offset-lg-1">
+                <h5 class="footer-heading">Quick Links</h5>
+                <a href="/listings" class="footer-link">Explore Stays</a>
+                <a href="/listings/new" class="footer-link">List your property</a>
+                <a href="/ai-travel-guide" class="footer-link">AI Trip Planner</a>
+                <a href="/wishlist" class="footer-link">Wishlist</a>
+            </div>
+
+            <!-- Company -->
+            <div class="col-lg-2 col-md-6 col-6">
+                <h5 class="footer-heading">Company</h5>
+                <a href="#" class="footer-link">About Us</a>
+                <a href="#" class="footer-link">Features</a>
+                <a href="#" class="footer-link">How it works</a>
+                <a href="#" class="footer-link">Contact</a>
+            </div>
+
+            <!-- Support -->
+            <div class="col-lg-2 col-md-6 col-6">
+                <h5 class="footer-heading">Support</h5>
+                <a href="#" class="footer-link">Help Center</a>
+                <a href="#" class="footer-link">Terms of Service</a>
+                <a href="#" class="footer-link">Privacy Policy</a>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="col-lg-2 col-md-6 col-6">
+                <h5 class="footer-heading">Newsletter</h5>
+                <p class="text-secondary mb-2" style="font-size: 0.8rem;">Get travel inspiration & AI tips delivered to your inbox.</p>
+                <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Subscribed!');">
+                    <input type="email" class="newsletter-input" placeholder="Enter your email" required />
+                    <button type="submit" class="newsletter-btn" aria-label="Subscribe">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
         </div>
-        <div class="f-info-brand"> &copy; Wonderlust Private Limited</div>
-        <div class="f-info-links">
-            <a href="/privacy" >Privacy</a>
-            <a href="/terms">Terms</a>
+
+        <!-- Bottom Copyright -->
+        <div class="footer-bottom">
+            &copy; 2026 Wonderlust. All rights reserved. Built with MERN Stack.
         </div>
     </div>
 </footer>

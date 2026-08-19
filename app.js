@@ -22,6 +22,7 @@ const LocalStrategy = require("passport-local");
 
 
 const User = require("./models/user.js");
+const Listing = require("./models/listing.js");
 
 const listingRouter= require("./routes/listing.js");
 const reviewRouter = require("./routes/reviews.js");
@@ -113,8 +114,13 @@ app.use((req, res, next) => {
 app.use(saveCurrentUser);
 
 
-app.get("/", (req, res) => {
-    res.render("home.ejs");
+app.get("/", async (req, res, next) => {
+    try {
+        const allListings = await Listing.find({}).limit(4);
+        res.render("home.ejs", { allListings });
+    } catch (err) {
+        next(err);
+    }
 });
 
 app.use("/listings", listingRouter);

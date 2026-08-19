@@ -328,3 +328,88 @@ body {
     background-color: rgba(255, 56, 92, 0.05) !important;
     color: #ff385c !important;
   }
+
+/* Footer Redesign */
+footer {
+    background-color: #fafafa;
+    border-top: 1px solid #eaeaea;
+    padding: 4rem 0 2rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.footer-heading {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1e1b4b;
+    margin-bottom: 1.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.footer-link {
+    color: #666;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s ease;
+    display: block;
+    margin-bottom: 0.75rem;
+}
+
+.footer-link:hover {
+    color: #ff385c;
+}
+
+.footer-socials {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.25rem;
+}
+
+.footer-socials a {
+    color: #666;
+    font-size: 1.25rem;
+    transition: color 0.2s;
+}
+
+.footer-socials a:hover {
+    color: #ff385c;
+}
+
+.newsletter-form {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.newsletter-input {
+    border: 1px solid #ddd;
+    border-radius: 1.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    outline: none;
+    flex-grow: 1;
+}
+
+.newsletter-btn {
+    background-color: #ff385c;
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: 1.5rem;
+    padding: 0.5rem 1.25rem;
+    font-size: 0.85rem;
+    transition: background-color 0.2s;
+}
+
+.newsletter-btn:hover {
+    background-color: #e0314f;
+}
+
+.footer-bottom {
+    border-top: 1px solid #eaeaea;
+    padding-top: 1.5rem;
+    margin-top: 3rem;
+    text-align: center;
+    font-size: 0.85rem;
+    color: #888;
+}

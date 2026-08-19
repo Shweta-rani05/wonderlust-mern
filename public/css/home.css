@@ -1,38 +1,409 @@
+/* Root Variables & General Styles */
+:root {
+    --brand-color: #ff385c;
+    --brand-hover: #e0314f;
+    --dark-blue: #1e1b4b;
+    --light-bg: #f8f9fa;
+    --gray-text: #666;
+}
+
 body {
-  margin: 0;
-  padding: 0;
-  background-color:  white; /* dark background */
-  font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: var(--dark-blue);
+    background-color: #fff;
 }
 
-.home-container {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* Hero Section */
+.hero-container {
+    position: relative;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+    height: 480px;
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.95) 45%, rgba(255, 255, 255, 0.1) 100%), url('https://images.unsplash.com/photo-1571896349842-33c89424de2d?q=80&w=1920');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 }
 
-.welcome-box {
-  background-color: #ffffff;
-  padding: 40px 50px;
-  width: 70%;
-  max-width: 700px;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  text-align: center;
+.hero-content {
+    max-width: 500px;
+    padding-left: 3rem;
 }
 
-.welcome-box h1 {
-  margin-bottom: 20px;
-  color: #de1f12;
-
+.hero-content h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--dark-blue);
+    margin-bottom: 1rem;
 }
 
-.welcome-box p {
-  font-size: 16px;
-  color: #374151;
-  line-height: 1.6;
+.hero-content h1 span.highlight {
+    color: var(--brand-color);
 }
 
+.hero-content p {
+    font-size: 1.05rem;
+    color: var(--gray-text);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
 
+.hero-ctas {
+    display: flex;
+    gap: 1rem;
+}
 
+.btn-brand {
+    background-color: var(--brand-color);
+    color: white !important;
+    font-weight: 600;
+    border-radius: 2rem;
+    padding: 0.75rem 1.75rem;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.btn-brand:hover {
+    background-color: var(--brand-hover);
+    transform: translateY(-2px);
+}
+
+.btn-outline-brand {
+    background-color: transparent;
+    color: var(--brand-color) !important;
+    font-weight: 600;
+    border: 2px solid var(--brand-color);
+    border-radius: 2rem;
+    padding: 0.75rem 1.75rem;
+    transition: all 0.2s ease;
+}
+
+.btn-outline-brand:hover {
+    background-color: rgba(255, 56, 92, 0.05);
+    transform: translateY(-2px);
+}
+
+/* Floating Search Bar */
+.search-widget-wrapper {
+    margin-top: -3.5rem;
+    position: relative;
+    z-index: 20;
+    padding: 0 1.5rem;
+}
+
+.search-widget {
+    background: white;
+    border-radius: 4rem;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+    padding: 0.75rem 1.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.search-col {
+    border-right: 1px solid #eee;
+    padding: 0.5rem 1rem;
+}
+
+.search-col:last-of-type {
+    border-right: none;
+}
+
+.search-col label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--dark-blue);
+    margin-bottom: 0.15rem;
+    display: block;
+}
+
+.search-col input, .search-col select {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 0.9rem;
+    color: #444;
+    background: transparent;
+}
+
+.btn-search-round {
+    background-color: var(--brand-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 3.25rem;
+    height: 3.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-search-round:hover {
+    background-color: var(--brand-hover);
+    transform: scale(1.05);
+}
+
+/* Feature Highlights Row */
+.features-section {
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+}
+
+.feature-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.02);
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    height: 100%;
+}
+
+.feature-icon-wrapper {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.f-safe { background-color: rgba(255, 56, 92, 0.1); color: var(--brand-color); }
+.f-ai { background-color: rgba(99, 102, 241, 0.1); color: #6366f1; }
+.f-discover { background-color: rgba(16, 185, 129, 0.1); color: #10b981; }
+.f-wishlist { background-color: rgba(245, 158, 11, 0.1); color: #f59e0b; }
+
+.feature-info h5 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+}
+
+.feature-info p {
+    font-size: 0.8rem;
+    color: var(--gray-text);
+    margin: 0;
+}
+
+/* AI Trip Planner Showcase */
+.ai-showcase-section {
+    background-color: #fafaff;
+    border-radius: 1.5rem;
+    padding: 3rem;
+    border: 1px solid rgba(99, 102, 241, 0.08);
+    margin-bottom: 4rem;
+}
+
+.ai-showcase-content h4 {
+    color: #6366f1;
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.ai-showcase-content h2 {
+    font-size: 2.25rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+}
+
+.ai-showcase-content p {
+    color: var(--gray-text);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.btn-ai {
+    background-color: #6366f1;
+    color: white !important;
+    font-weight: 600;
+    border-radius: 2rem;
+    padding: 0.75rem 2rem;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.btn-ai:hover {
+    background-color: #4f46e5;
+    transform: translateY(-2px);
+}
+
+.itinerary-mockup {
+    background: white;
+    border-radius: 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
+    padding: 1.5rem;
+}
+
+.itinerary-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.itinerary-header h6 {
+    font-weight: 700;
+    margin: 0;
+}
+
+.itinerary-day {
+    border-left: 2px solid #6366f1;
+    padding-left: 1rem;
+    margin-bottom: 1rem;
+}
+
+.itinerary-day h7 {
+    font-weight: 700;
+    color: #6366f1;
+    font-size: 0.85rem;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.itinerary-item {
+    font-size: 0.85rem;
+    color: #333;
+    margin-bottom: 0.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Featured Stays */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.section-header h2 {
+    font-size: 1.75rem;
+    font-weight: 800;
+}
+
+.link-view-all {
+    color: var(--brand-color);
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.2s ease;
+}
+
+.link-view-all:hover {
+    color: var(--brand-hover);
+}
+
+/* Wishlist buttons and styles */
+.wishlist-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 10;
+    outline: none;
+    pointer-events: auto;
+}
+
+.wishlist-icon {
+    font-size: 1.5rem;
+    text-shadow: 0 0 5px rgba(0,0,0,0.5);
+    filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.4));
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+.wishlist-icon.active {
+    color: #ff385c;
+}
+.wishlist-icon.inactive {
+    color: white;
+}
+
+/* How Wonderlust Works */
+.timeline-section {
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+}
+
+.timeline-step {
+    text-align: center;
+    position: relative;
+}
+
+.timeline-circle {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    background-color: var(--light-bg);
+    border: 2px dashed #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.25rem;
+    font-size: 1.5rem;
+    color: var(--brand-color);
+}
+
+.timeline-step h5 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.timeline-step p {
+    font-size: 0.8rem;
+    color: var(--gray-text);
+    line-height: 1.5;
+    max-width: 200px;
+    margin: 0 auto;
+}
+
+/* Built with Modern Technologies */
+.tech-section {
+    margin-bottom: 6rem;
+}
+
+.tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1.25rem;
+}
+
+.tech-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.25rem;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.01);
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+.tech-card:hover {
+    transform: translateY(-3px);
+}
+
+.tech-card img {
+    height: 2.5rem;
+    object-fit: contain;
+    margin-bottom: 0.75rem;
+}
+
+.tech-card span {
+    font-size: 0.8rem;
+    font-weight: 700;
+    display: block;
+    color: var(--dark-blue);
+}

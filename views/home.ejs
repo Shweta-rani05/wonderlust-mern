@@ -1,37 +1,357 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Wonderlust | Home</title>
-  <link rel="stylesheet" href="/css/home.css">
-</head>
-<body>
+<% layout("/layouts/boilerplate") %>
 
-<% layout("/layouts/boilerplate")%>
+<link rel="stylesheet" href="/css/home.css">
 
-  <div class="home-container">
-  <div class="welcome-box">
-    <h1>Welcome to Wonderlust !</h1>
+<div class="container pb-5">
+    
+    <!-- Hero Banner -->
+    <div class="hero-container">
+        <div class="hero-content">
+            <h1>Discover stays. Plan smarter. <span class="highlight">Travel better.</span></h1>
+            <p>Explore unique places to stay and get personalized day-wise travel itineraries generated instantly with Wonderlust Gemini AI.</p>
+            <div class="hero-ctas">
+                <a href="/listings" class="btn btn-brand d-flex align-items-center gap-2">
+                    <i class="fa-solid fa-magnifying-glass"></i> Explore Stays
+                </a>
+                <a href="/ai-travel-guide" class="btn btn-outline-brand d-flex align-items-center gap-2">
+                    <i class="fa-solid fa-compass"></i> Plan My Trip
+                </a>
+            </div>
+        </div>
+    </div>
 
-    <p>
-      A full-stack <strong>MERN-based hotel booking platform</strong> engineered by 
-      <strong>Shweta Rani</strong>, focusing on scalability, performance, and clean architecture.
-    </p>
+    <!-- Floating Search Bar Widget -->
+    <div class="search-widget-wrapper">
+        <form onsubmit="handleSearch(event);" class="search-widget row g-0 align-items-center">
+            <!-- Where to -->
+            <div class="col search-col">
+                <label>Where to?</label>
+                <input type="text" id="search-destination" placeholder="Search destinations" autocomplete="off" />
+            </div>
+            <!-- Category -->
+            <div class="col search-col">
+                <label>Category</label>
+                <select id="search-category">
+                    <option selected>All categories</option>
+                    <option>Trending</option>
+                    <option>Rooms</option>
+                    <option>Iconic Cities</option>
+                    <option>Mountains</option>
+                    <option>Castles</option>
+                    <option>Amazing pools</option>
+                    <option>Camping</option>
+                    <option>Farms</option>
+                    <option>Arctic</option>
+                    <option>Domes</option>
+                    <option>Boats</option>
+                    <option>Island</option>
+                </select>
+            </div>
+            <!-- Price Range -->
+            <div class="col search-col">
+                <label>Price Range</label>
+                <select id="search-price">
+                    <option>Any Price</option>
+                    <option>&lt; &#8377;2,000</option>
+                    <option>&#8377;2,000 - &#8377;5,000</option>
+                    <option>&gt; &#8377;5,000</option>
+                </select>
+            </div>
+            <!-- Check In/Out -->
+            <div class="col search-col">
+                <label>Check in - Check out</label>
+                <input type="text" placeholder="Add dates" onfocus="(this.type='date')" onblur="(this.type='text')" />
+            </div>
+            <!-- Submit Button -->
+            <div class="col-auto ps-3">
+                <button type="submit" class="btn-search-round" aria-label="Search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
+        </form>
+    </div>
 
-    <p>
-      This application implements <strong>RESTful APIs</strong>, secure 
-      <strong>authentication & session management (Passport.js)</strong>, and 
-      efficient <strong>MongoDB data modeling</strong> to handle real-world booking workflows.
-    </p>
+    <!-- Feature Highlights Section -->
+    <div class="features-section">
+        <div class="row g-4">
+            <!-- Feature 1 -->
+            <div class="col-md-3">
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper f-safe">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <div class="feature-info">
+                        <h5>Secure & Safe</h5>
+                        <p>Passport.js verification & protected routes.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Feature 2 -->
+            <div class="col-md-3">
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper f-ai">
+                        <i class="fa-solid fa-microchip"></i>
+                    </div>
+                    <div class="feature-info">
+                        <h5>AI Trip Planner</h5>
+                        <p>Gemini AI generates personalized itineraries.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Feature 3 -->
+            <div class="col-md-3">
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper f-discover">
+                        <i class="fa-solid fa-compass"></i>
+                    </div>
+                    <div class="feature-info">
+                        <h5>Smart Discovery</h5>
+                        <p>Mapbox integration & category filtering.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Feature 4 -->
+            <div class="col-md-3">
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper f-wishlist">
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+                    <div class="feature-info">
+                        <h5>Wishlist</h5>
+                        <p>Save your favorite hotels to explore later.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <p>
-      Built with a strong backend foundation using 
-      <strong>Node.js & Express</strong>, the system ensures robust routing, middleware handling, and data validation, while delivering a responsive and modern user experience.
-    </p>
-  </div>
+    <!-- AI Trip Planner Panel Section -->
+    <div class="ai-showcase-section">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6 ai-showcase-content">
+                <h4>Powered by Gemini AI</h4>
+                <h2>Plan your perfect trip ✨</h2>
+                <p>Tell us your destination, budget, travel style, and duration. Our intelligent travel assistant leverages Google's Gemini LLM to create a day-by-day customized itinerary complete with sightseeing, dining, and local guides.</p>
+                <a href="/ai-travel-guide" class="btn btn-ai d-inline-flex align-items-center gap-2">
+                    Try AI Trip Planner <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+            <div class="col-lg-6">
+                <!-- Visual Mockup Card -->
+                <div class="itinerary-mockup">
+                    <div class="itinerary-header">
+                        <h6>📍 Goa, India</h6>
+                        <span class="badge bg-indigo-subtle text-indigo border" style="background-color: rgba(99, 102, 241, 0.1); color: #6366f1; border-color: rgba(99, 102, 241, 0.2);">3 Days &bull; &#8377;15,000 &bull; Couple</span>
+                    </div>
+                    <div class="itinerary-day">
+                        <h7>Day 1</h7>
+                        <div class="itinerary-item"><i class="fa-solid fa-umbrella-beach text-warning"></i> Baga Beach morning walk</div>
+                        <div class="itinerary-item"><i class="fa-solid fa-shrimp text-danger"></i> Local seafood lunch at Brittos</div>
+                        <div class="itinerary-item"><i class="fa-solid fa-tree-city text-success"></i> Sunset exploration at Fort Aguada</div>
+                    </div>
+                    <div class="itinerary-day" style="margin-bottom: 0;">
+                        <h7>Day 2</h7>
+                        <div class="itinerary-item"><i class="fa-solid fa-water text-primary"></i> Dudhsagar waterfalls trek</div>
+                    </div>
+                    <a href="/ai-travel-guide" class="btn btn-outline-secondary btn-sm w-100 mt-3 rounded-pill fw-semibold py-2">View Full Itinerary</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Featured Stays Grid -->
+    <div class="featured-stays-section">
+        <div class="section-header">
+            <h2>Featured Stays</h2>
+            <a href="/listings" class="link-view-all">View all <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+
+        <div class="row row-cols-lg-4 row-cols-md-2 row-cols-sm-1 g-4">
+            <% for (let listing of allListings) { %>
+                <div class="col">
+                    <a href="/listings/<%= listing._id %>" class="listing-link text-decoration-none">
+                        <div class="card col listing-card h-100 border-0 shadow-sm rounded-4 overflow-hidden position-relative">
+                            <img src="<%= listing.image.url || 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85' %>"
+                                class="card-img-top" alt="listingsimage" style="height:15rem; object-fit: cover;" />
+                            
+                            <!-- Wishlist Toggle overlay -->
+                            <div class="card-img-overlay" style="pointer-events: none; background: none;">
+                                <% 
+                                  let isWishlisted = false; 
+                                  if (typeof currUser !== 'undefined' && currUser && currUser.wishlist) {
+                                      isWishlisted = currUser.wishlist.some(id => id.toString() === listing._id.toString());
+                                  }
+                                %>
+                                <button class="wishlist-btn border-0 bg-transparent" data-id="<%= listing._id %>" aria-label="Toggle Wishlist">
+                                    <i class="<%= isWishlisted ? 'fa-solid fa-heart wishlist-icon active' : 'fa-regular fa-heart wishlist-icon inactive' %>"></i>
+                                </button>
+                            </div>
+
+                            <div class="card-body px-3 py-3">
+                                <p class="card-text mb-0 text-dark">
+                                    <b style="font-size: 1rem;"><%= listing.title %></b>
+                                    <br />
+                                    <span class="text-secondary" style="font-size: 0.85rem;"><i class="fa-solid fa-location-dot me-1"></i><%= listing.location %>, <%= listing.country %></span>
+                                    <br />
+                                    <% 
+                                      let sum = 0;
+                                      if (listing.reviews && listing.reviews.length > 0) {
+                                          for (let r of listing.reviews) { sum += r.rating; }
+                                      }
+                                      let avgRating = (listing.reviews && listing.reviews.length > 0) ? (sum / listing.reviews.length).toFixed(1) : "New";
+                                    %>
+                                    <span class="text-warning" style="font-size: 0.85rem;"><i class="fa-solid fa-star me-1"></i><%= avgRating %></span>
+                                    <span class="text-secondary" style="font-size: 0.85rem;">(<%= listing.reviews ? listing.reviews.length : 0 %> reviews)</span>
+                                    <br />
+                                    <span class="text-dark fw-bold" style="font-size: 1.05rem;">&#8377;<%= listing.price.toLocaleString("en-IN") %></span>
+                                    <span class="text-secondary" style="font-size: 0.8rem;">/night</span>
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            <% } %>
+        </div>
+    </div>
+
+    <!-- How Wonderlust Works Steps Timeline -->
+    <div class="timeline-section">
+        <h3 class="text-center mb-5 fw-bold">How Wonderlust Works</h3>
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-3">
+                <div class="timeline-step">
+                    <div class="timeline-circle shadow-sm">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                    <h5>1. Explore</h5>
+                    <p>Browse unique stays across popular destinations.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="timeline-step">
+                    <div class="timeline-circle shadow-sm">
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+                    <h5>2. Save</h5>
+                    <p>Add your favorite properties to your wishlist.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="timeline-step">
+                    <div class="timeline-circle shadow-sm">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <h5>3. Plan</h5>
+                    <p>Let AI create your personalized travel itinerary.</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="timeline-step">
+                    <div class="timeline-circle shadow-sm">
+                        <i class="fa-solid fa-passport"></i>
+                    </div>
+                    <h5>4. Travel</h5>
+                    <p>Book your stay and enjoy your perfect trip.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Technologies Grid Section -->
+    <div class="tech-section">
+        <h3 class="text-center mb-4 fw-bold">Built with Modern Technologies</h3>
+        <div class="tech-grid">
+            <div class="tech-card">
+                <img src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/mongodb/mongodb.png" alt="MongoDB" />
+                <span>MongoDB</span>
+            </div>
+            <div class="tech-card">
+                <img src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/express/express.png" alt="Express.js" style="filter: invert(1);" />
+                <span>Express.js</span>
+            </div>
+            <div class="tech-card">
+                <img src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/nodejs/nodejs.png" alt="Node.js" />
+                <span>Node.js</span>
+            </div>
+            <div class="tech-card">
+                <img src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/html/html.png" alt="EJS" />
+                <span>EJS</span>
+            </div>
+            <div class="tech-card">
+                <img src="/images/passportjs.png" alt="Passport.js" />
+                <span>Passport.js</span>
+            </div>
+            <div class="tech-card">
+                <img src="/images/gemini.png" alt="Gemini AI" />
+                <span>Gemini AI</span>
+            </div>
+            <div class="tech-card">
+                <img src="/images/mapbox.png" alt="Mapbox" />
+                <span>Mapbox</span>
+            </div>
+            <div class="tech-card">
+                <img src="/images/cloudinary.png" alt="Cloudinary" />
+                <span>Cloudinary</span>
+            </div>
+        </div>
+    </div>
 </div>
 
-   <% layout("/layouts/boilerplate")%>
+<script>
+    // Intercept search bar submits and redirect to standard MERN search routes
+    function handleSearch(event) {
+        event.preventDefault();
+        const destination = document.getElementById("search-destination").value.trim();
+        const category = document.getElementById("search-category").value;
+        const price = document.getElementById("search-price").value;
 
+        let query = destination;
+        if (category && category !== "All categories") {
+            query += " " + category;
+        }
+
+        if (!query) {
+            window.location.href = "/listings";
+            return;
+        }
+
+        // Submits matching existing backend routing query 'q'
+        window.location.href = `/search?q=${encodeURIComponent(query)}`;
+    }
+
+    // Reuse AJAX wishlist toggler for homepage featured stays
+    document.querySelectorAll(".wishlist-btn").forEach(btn => {
+        btn.addEventListener("click", async (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const id = btn.getAttribute("data-id");
+            try {
+                const response = await fetch(`/listings/${id}/wishlist`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
+                
+                const data = await response.json();
+                if (response.status === 401 && data.redirect) {
+                    window.location.href = data.redirect;
+                    return;
+                }
+                
+                if (data.success) {
+                    const icon = btn.querySelector("i");
+                    if (data.added) {
+                        icon.className = "fa-solid fa-heart wishlist-icon active";
+                    } else {
+                        icon.className = "fa-regular fa-heart wishlist-icon inactive";
+                    }
+                }
+            } catch (err) {
+                console.error("Error toggling wishlist:", err);
+            }
+        });
+    });
+</script>
 </body>
-</html>
