@@ -30,6 +30,15 @@ module.exports.isOwner = async (req,res,next)=>{
        next();
 }
 
+module.exports.hasOwnerRole = (req, res, next) => {
+    if (req.user && req.user.role === 'owner') {
+        next();
+    } else {
+        req.flash("error", "You must be registered as an Owner to perform this action.");
+        return res.redirect("/listings");
+    }
+};
+
 module.exports.validateListing =(req,res,next)=>{
      let {error} = listingSchema.validate(req.body);
      if(error){

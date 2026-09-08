@@ -28,4 +28,8 @@ router.get("/logout",userController.logout);
 // wishlist view route
 router.get("/wishlist", isLoggedIn, wrapAsync(listingController.viewWishlist));
 
+// owner dashboard route
+const { hasOwnerRole } = require("../middleware.js");
+router.get("/owner/dashboard", isLoggedIn, hasOwnerRole, wrapAsync(userController.ownerDashboard));
+
 module.exports = router;

@@ -2,13 +2,13 @@ const User = require("../models/user");
 
 //signup form
 module.exports.renderSignupForm = (req,res)=>{
-    res.render("users/signup.ejs");
+    res.render("users/signup.ejs", { role: req.query.role || 'user' });
 };
 module.exports.signup = async (req, res, next) => {
     try {
-        const { username, email, password } = req.body;
+        const { username, email, password, role } = req.body;
 
-        const newUser = new User({ email, username });
+        const newUser = new User({ email, username, role: role || 'user' });
         const registeredUser = await User.register(newUser, password);
 
         console.log(registeredUser);
@@ -32,7 +32,7 @@ module.exports.signup = async (req, res, next) => {
 
 //login form 
 module.exports.renderLoginForm = (req,res)=>{
-    res.render("users/login.ejs");
+    res.render("users/login.ejs", { role: req.query.role || 'user' });
 };
 
 //login
@@ -59,3 +59,10 @@ module.exports.logout = (req,res,next)=>{
         res.redirect("/listings");
     });
 };
+
+module.exports.ownerDashboard = async (req, res) => {
+    const Listing = require("../models/listing");
+    const allListings = await Listing.find({ owner: req.user._id });
+    res.render("listings/index.ejs", { allListings, pageTitle: "My Listings" });
+};
+

@@ -123,6 +123,11 @@
             </div>
         </div>
         <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+            <% if (typeof pageTitle !== 'undefined') { %>
+                <div class="col-12 mb-3 mt-3">
+                    <h3><%= pageTitle %> (<%= allListings.length %>)</h3>
+                </div>
+            <% } %>
             <% for (let listing of allListings) { %>
                 <a href="/listings/<%= listing._id %>" class="listing-link" data-category="<%= listing.category || '' %>">
                     <div class="card col listing-card">
@@ -170,31 +175,22 @@
 
         // Category Filtering Logic
         const filters = document.querySelectorAll(".filter");
-        const listingLinks = document.querySelectorAll(".listing-link");
-
+        
+        // Set active class based on URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const currentCategory = urlParams.get("category") || "Trending";
+        
         filters.forEach(filter => {
-            filter.addEventListener("click", () => {
-                // Toggle active class
-                filters.forEach(f => f.classList.remove("active"));
+            if (filter.getAttribute("data-category") === currentCategory) {
                 filter.classList.add("active");
-
+            } else {
+                filter.classList.remove("active");
+            }
+            
+            filter.addEventListener("click", () => {
                 const selectedCategory = filter.getAttribute("data-category");
-
-                listingLinks.forEach(link => {
-                    const listingCategory = link.getAttribute("data-category");
-                    
-                    if (selectedCategory === "Trending") {
-                        // Reset filter and show all listings
-                        link.style.display = "";
-                    } else {
-                        // Match selected category (case-sensitive check matching the database enum)
-                        if (listingCategory === selectedCategory) {
-                            link.style.display = "";
-                        } else {
-                            link.style.display = "none";
-                        }
-                    }
-                });
+                const basePath = window.location.pathname; 
+                window.location.href = `${basePath}?category=${encodeURIComponent(selectedCategory)}`;
             });
         });
         // Wishlist Toggle Logic

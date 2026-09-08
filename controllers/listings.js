@@ -5,8 +5,12 @@ const mapToken=process.env.MAP_TOKEN;
 const geocodingClient = mbxGeocoding({ accessToken: mapToken});
 
 module.exports.index = async (req, res) => {  //index 
-    const allListings = await Listing.find({});
-    res.render("./listings/index.ejs", { allListings });
+    let filter = {};
+    if (req.query.category && req.query.category !== 'Trending') {
+        filter.category = req.query.category;
+    }
+    const allListings = await Listing.find(filter);
+    res.render("./listings/index.ejs", { allListings, currentCategory: req.query.category || 'Trending' });
 }
 
 module.exports.renderNewForm = (req, res) => { //new

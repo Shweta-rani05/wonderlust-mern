@@ -26,6 +26,14 @@
   .nav-link:hover {
     color: #ff385c !important;
   }
+
+  /* Hoverable Dropdowns */
+  @media all and (min-width: 992px) {
+    .dropdown:hover .dropdown-menu {
+      display: block;
+      margin-top: 0; 
+    }
+  }
 </style>
 
 <nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top py-2">
@@ -70,11 +78,16 @@
       <!-- Right Section: Host and Auth links -->
       <div class="navbar-nav ms-auto align-items-center gap-3 mt-2 mt-md-0">
 
-        <a class="nav-link fw-semibold" href="/listings/new">
-          List your property
-        </a>
-
         <% if (typeof currUser !== 'undefined' && currUser) { %>
+
+          <% if (currUser.role === 'owner') { %>
+            <a class="nav-link fw-semibold" href="/owner/dashboard">
+              My Listings
+            </a>
+            <a class="nav-link fw-semibold" href="/listings/new">
+              List your property
+            </a>
+          <% } %>
 
           <!-- User is logged in -->
           <a class="nav-link fw-semibold d-flex align-items-center gap-1" href="/wishlist">
@@ -88,13 +101,25 @@
           <% } else { %>
 
             <!-- User is not logged in -->
-            <a class="nav-link fw-semibold" href="/signup">
-              Sign up
-            </a>
+            <div class="nav-item dropdown">
+              <a class="nav-link fw-semibold dropdown-toggle" href="#" id="signupDropdown" role="button" aria-expanded="false">
+                Sign up
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0" aria-labelledby="signupDropdown">
+                <li><a class="dropdown-item" href="/signup?role=user">👤User</a></li>
+                <li><a class="dropdown-item" href="/signup?role=owner">🏠Owner</a></li>
+              </ul>
+            </div>
 
-            <a class="nav-link fw-semibold" href="/login">
-              Log in
-            </a>
+            <div class="nav-item dropdown">
+              <a class="nav-link fw-semibold dropdown-toggle" href="#" id="loginDropdown" role="button" aria-expanded="false">
+                Log in
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0" aria-labelledby="loginDropdown">
+                <li><a class="dropdown-item" href="/login?role=user">👤User</a></li>
+                <li><a class="dropdown-item" href="/login?role=owner">🏠Owner</a></li>
+              </ul>
+            </div>
 
             <% } %>
 

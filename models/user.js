@@ -10,6 +10,11 @@ const userSchema = new Schema({
         type:String,
         required : true
     },
+    role: {
+        type: String,
+        enum: ['user', 'owner'],
+        default: 'user'
+    },
     wishlist: [
         {
             type: Schema.Types.ObjectId,
