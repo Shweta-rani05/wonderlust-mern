@@ -1,144 +1,174 @@
-<div align="center">
-  <h1>🌍 Wonderlust</h1>
-  <h3>AI-Powered Full-Stack Hotel Booking Platform</h3>
-  <p>A scalable, production-ready MERN stack application featuring secure authentication, property management, and an integrated AI Smart Travel Assistant.</p>
+# 🌍 Wonderlust
 
-  <p>
-    <a href="https://wonderlust-mern-kj89.onrender.com/"><strong>🌐 Live Demo</strong></a> ·
-    <a href="https://github.com/Shweta-rani05/wonderlust-mern"><strong>💻 Source Code</strong></a>
-  </p>
-</div>
+### AI-Powered Full-Stack Hotel Booking Platform
+
+A scalable, production-ready **MERN** stack application for exploring, creating, and managing hotel/property listings — featuring secure authentication, cloud image storage, interactive maps, and an integrated **AI Travel Assistant**.
+
+[**🌐 Live Demo**](https://wonderlust-mern-kj89.onrender.com/) · [**💻 Source Code**](https://github.com/Shweta-rani05/wonderlust-mern)
+
+![Node.js](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
+![MongoDB](https://img.shields.io/badge/MongoDB-4ea94b?style=for-the-badge&logo=mongodb&logoColor=white)
+![Google Gemini](https://img.shields.io/badge/Google%20Gemini-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white)
+![Cloudinary](https://img.shields.io/badge/Cloudinary-3448C5?style=for-the-badge&logo=Cloudinary&logoColor=white)
+![Mapbox](https://img.shields.io/badge/Mapbox-000000?style=for-the-badge&logo=mapbox&logoColor=white)
 
 ---
 
 ## ✨ Overview
 
-Wonderlust goes beyond a traditional hotel booking site by integrating a **Smart AI Travel Assistant**. Users can explore, manage hotel listings, and seamlessly generate personalized travel itineraries using **Google Gemini AI**. 
+Wonderlust goes beyond a traditional hotel-booking clone by integrating a **Smart AI Travel Assistant** powered by **Google Gemini**. Users can browse and manage property listings while generating personalized, budget-aware travel itineraries — all wrapped in a secure, RESTful MVC architecture built for real-world extensibility.
 
-Built with modern web development practices, it showcases a robust backend architecture, RESTful API design, secure authentication, and a responsive frontend. This project is designed to be recruiter-friendly, highlighting clean code organization and real-world application workflows.
+This project is intentionally structured to demonstrate:
+- Clean separation of concerns (MVC)
+- Secure, session-based authentication
+- Practical LLM integration inside a production web app
+- A foundation designed to evolve from single-shot GenAI calls into a **tool-using, multi-agent system**
 
 ---
 
 ## 🚀 Key Features
 
-### 🤖 Smart AI Travel Assistant (NEW!)
-- **Personalized Itineraries:** Generate day-wise trip plans powered by Google Gemini AI.
-- **Budget-Aware & Type-Specific:** Get recommendations tailored to your budget and travel style.
-- **Local Insights:** Discover nearby attractions, local food recommendations, and travel tips.
-- **Export & Share:** Download itineraries as PDFs or copy them to the clipboard effortlessly.
-- **Beautiful Responsive UI:** Built to give a smooth AI conversation experience.
+### 🤖 Smart AI Travel Assistant
+- **Personalized Itineraries** — day-wise trip plans generated via Google Gemini AI
+- **Budget-Aware & Type-Specific** — recommendations tailored to budget and travel style
+- **Local Insights** — nearby attractions, food recommendations, and travel tips
+- **Export & Share** — download itineraries as PDF or copy to clipboard
+- **Conversational UI** — smooth, chat-style AI interaction
 
 ### 🏨 Comprehensive Hotel Listings
-- **Property Management:** Full CRUD operations for listings (Create, Edit, Delete).
-- **Interactive Maps:** Real-time location integration using Mapbox API.
-- **Cloud Storage:** Optimized image uploading and management via Cloudinary.
-- **Smart Filtering:** Destination search and category-based dynamic filtering.
+- Full CRUD for property listings (create, edit, delete)
+- Real-time location integration via **Mapbox**
+- Optimized image storage & management via **Cloudinary**
+- Destination search and category-based dynamic filtering
 
 ### 🔐 Security & Authentication
-- **Secure Access:** Session-based authentication using Passport.js.
-- **Data Protection:** Secure password hashing and route authorization.
-- **Validation:** Robust server-side input validation using Joi.
+- Session-based authentication with **Passport.js**
+- Secure password hashing and route-level authorization
+- Server-side input validation via **Joi**
 
 ### ⭐ User Engagement
-- **Review System:** Users can leave ratings and reviews on properties.
-- **Authorization:** Only authorized users can edit their listings or delete their reviews.
+- Ratings and reviews on listings
+- Ownership-based authorization (only authors can edit/delete their own content)
 
 ---
 
 ## 🛠 Tech Stack
 
-**Frontend:**  
-![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E) ![Bootstrap](https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white) ![EJS](https://img.shields.io/badge/ejs-%23B4CA65.svg?style=for-the-badge&logo=ejs&logoColor=black)
-
-**Backend:**  
-![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white) ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
-
-**Database & Cloud:**  
-![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white) ![Cloudinary](https://img.shields.io/badge/Cloudinary-3448C5?style=for-the-badge&logo=Cloudinary&logoColor=white) 
-
-**APIs:**  
-![Google Gemini AI](https://img.shields.io/badge/Google%20Gemini-8E75B2?style=for-the-badge&logo=google%20gemini&logoColor=white) ![Mapbox](https://img.shields.io/badge/Mapbox-000000?style=for-the-badge&logo=mapbox&logoColor=white)
-
----
-
-## 💻 Getting Started
-
-Follow these steps to run the project locally.
-
-### Prerequisites
-- [Node.js](https://nodejs.org/) (v18 or higher)
-- [MongoDB](https://www.mongodb.com/) (Local or Atlas)
-- Cloudinary Account
-- Mapbox Account
-- Google Gemini API Key
-
-### Installation
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/Shweta-rani05/wonderlust-mern.git
-   cd wonderlust-mern
-   ```
-
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-
-3. **Set up Environment Variables:**
-   Create a `.env` file in the root directory and add your credentials:
-   ```env
-   ATLASDB_URL=<your-mongodb-connection-string>
-   SECRET=<your-session-secret>
-   CLOUDINARY_CLOUD_NAME=<your-cloudinary-cloud-name>
-   CLOUDINARY_KEY=<your-cloudinary-api-key>
-   CLOUDINARY_SECRET=<your-cloudinary-api-secret>
-   MAP_TOKEN=<your-mapbox-api-key>
-   GEMINI_API_KEY=<your-google-gemini-api-key>
-   ```
-
-4. **Run the application:**
-   ```bash
-   # Development mode (with nodemon)
-   npm run dev
-
-   # Or standard execution
-   npm start
-   ```
-
-5. **Access the app:**
-   Open [http://localhost:8080](http://localhost:8080) in your browser.
+| Layer | Technologies |
+|---|---|
+| **Frontend** | HTML5, CSS3, JavaScript, Bootstrap, EJS |
+| **Backend** | Node.js, Express.js |
+| **Database** | MongoDB (Mongoose ODM) |
+| **Cloud & Storage** | Cloudinary |
+| **AI / LLM** | Google Gemini AI |
+| **Maps** | Mapbox API |
+| **Auth** | Passport.js, express-session |
+| **Validation** | Joi |
 
 ---
 
 ## 📂 Architecture & Design
 
-The application follows the **MVC (Model-View-Controller)** pattern to ensure clean separation of concerns:
-- **Models:** Mongoose schemas defining MongoDB collections.
-- **Views:** EJS templates for dynamic frontend rendering.
-- **Controllers:** Business logic handling data flow between Models and Views.
-- **Routes:** RESTful endpoints logically grouped by feature.
-- **Middlewares:** Reusable logic for authentication, validation, and error handling.
-- **Services:** Dedicated modules for external API integrations (e.g., Gemini AI).
+The application follows the **MVC (Model–View–Controller)** pattern:
+
+```
+wonderlust-mern/
+├── controllers/     # Business logic — data flow between models and views
+├── models/          # Mongoose schemas (Listing, Review, User)
+├── views/           # EJS templates for server-rendered UI
+├── routes/          # RESTful endpoints grouped by feature
+├── middleware/       # Auth, validation, error handling
+├── services/        # External API integrations (Gemini AI, Mapbox, Cloudinary)
+├── utils/           # Shared helpers (ExpressError, wrapAsync, etc.)
+├── init/            # DB seed scripts
+├── app.js           # App entry point
+└── cloudConfig.js   # Cloudinary configuration
+```
+
+- **Models** → Mongoose schemas defining MongoDB collections
+- **Views** → EJS templates for dynamic server-side rendering
+- **Controllers** → Business logic handling data flow between Models and Views
+- **Routes** → RESTful endpoints logically grouped by feature
+- **Middleware** → Reusable logic for authentication, validation, and error handling
+- **Services** → Dedicated modules for external API integrations (currently: Gemini AI)
+
+---
+
+## 💻 Getting Started
+
+### Prerequisites
+- [Node.js](https://nodejs.org/) v18+
+- [MongoDB](https://www.mongodb.com/) (local or Atlas)
+- Cloudinary account
+- Mapbox account
+- Google Gemini API key
+
+### Installation
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/Shweta-rani05/wonderlust-mern.git
+cd wonderlust-mern
+
+# 2. Install dependencies
+npm install
+```
+
+Create a `.env` file in the root directory:
+
+```env
+ATLASDB_URL=<your-mongodb-connection-string>
+SECRET=<your-session-secret>
+CLOUDINARY_CLOUD_NAME=<your-cloudinary-cloud-name>
+CLOUDINARY_KEY=<your-cloudinary-api-key>
+CLOUDINARY_SECRET=<your-cloudinary-api-secret>
+MAP_TOKEN=<your-mapbox-api-key>
+GEMINI_API_KEY=<your-google-gemini-api-key>
+```
+
+```bash
+# 3. Run the app
+npm run dev     # development mode (nodemon)
+npm start        # production mode
+```
+
+Visit **http://localhost:8080** in your browser.
+
+---
+
+## 🧠 Roadmap: Toward a Multi-Agent Architecture
+
+The current AI Travel Assistant is a single-shot LLM integration. The next phase evolves it into a **tool-calling, multi-agent system** grounded in the app's own data — moving from "AI that generates text" to "AI that takes actions":
+
+| Planned Agent | Role | Tools it would call |
+|---|---|---|
+| **Trip Planning Agent** | Generates itineraries grounded in *real* listings instead of generic AI text | `searchListings()`, `getListingDetails()`, `getNearbyAttractions()` |
+| **Listing Assistant Agent** | Auto-drafts titles/descriptions from uploaded images & location; flags incomplete listings before submission | `analyzeImage()`, `geocodeAddress()`, `checkListingCompleteness()` |
+| **Concierge Search Agent** | Conversational, natural-language search with fallback reasoning (e.g., relaxing a filter when zero results are found) | `filterListings()`, `relaxConstraint()` |
+
+All three will share a common tool registry (`services/agents/tools.js`) and route through a lightweight orchestrator, so the system is a coordinated multi-agent architecture rather than three disconnected AI features.
 
 ---
 
 ## 🔮 Future Enhancements
-- Fully-functional Booking & Payment Gateway (Stripe/Razorpay)
-- Date Availability Calendar
-- User Wishlists
-- Real-time Email & In-App Notifications
+
+- Multi-agent AI system (see Roadmap above)
+- Full booking & payment gateway (Stripe/Razorpay)
+- Date availability calendar
+- User wishlists
+- Real-time email & in-app notifications
 
 ---
 
 ## 👩‍💻 Author
 
-**Shweta Rani**  
-- B.Tech Computer Science Engineering
-- GitHub: [@Shweta-rani05](https://github.com/Shweta-rani05)
+**Shweta Rani**
+B.Tech Computer Science Engineering
+GitHub: [@Shweta-rani05](https://github.com/Shweta-rani05)
 
 ---
 
 ## ⭐ Support
 
-If you found this project helpful or interesting, please consider giving it a ⭐ on GitHub!
+If you found this project helpful, consider giving it a ⭐ on GitHub!
