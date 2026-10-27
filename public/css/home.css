@@ -56,6 +56,28 @@ body {
 .hero-ctas {
     display: flex;
     gap: 1rem;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 767px) {
+    .hero-container {
+        height: auto;
+        min-height: 320px;
+        background-image: linear-gradient(to bottom, rgba(255,255,255,0.92) 60%, rgba(255,255,255,0.3) 100%), url('https://images.unsplash.com/photo-1571896349842-33c89424de2d?q=80&w=1920');
+    }
+
+    .hero-content {
+        padding: 2rem 1.25rem;
+        max-width: 100%;
+    }
+
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+
+    .hero-content p {
+        font-size: 0.95rem;
+    }
 }
 
 .btn-brand {
@@ -147,6 +169,22 @@ body {
 .btn-search-round:hover {
     background-color: var(--brand-hover);
     transform: scale(1.05);
+}
+
+/* Mobile: reduce font size so search widget labels/inputs fit */
+@media (max-width: 767px) {
+    .search-widget-wrapper {
+        margin-top: 1rem;
+        padding: 0;
+    }
+
+    .search-col label {
+        font-size: 0.65rem;
+    }
+
+    .search-col input, .search-col select {
+        font-size: 0.75rem;
+    }
 }
 
 /* Feature Highlights Row */
